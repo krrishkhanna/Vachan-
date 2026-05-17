@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vachan Live Preview</title>
+    <style>
+      :root {
+        --bg: #eef7ff;
+        --surface: rgba(255, 255, 255, 0.88);
+        --surface-strong: #ffffff;
+        --text: #0f172a;
+        --muted: #5b6b80;
+        --primary: #0077b6;
+        --primary-dark: #005f8d;
+        --primary-soft: rgba(0, 119, 182, 0.1);
+        --line: rgba(15, 23, 42, 0.08);
+        --true: #16a34a;
+        --false: #dc2626;
+        --misleading: #f59e0b;
+        --unverifiable: #64748b;
+        --shadow: 0 20px 45px rgba(0, 80, 130, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "SF Pro Display", system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(0, 119, 182, 0.2), transparent 35%),
+          radial-gradient(circle at top right, rgba(14, 165, 233, 0.12), transparent 28%),
+          linear-gradient(180deg, #f6fbff 0%, #edf6ff 100%);
+      }
+
+      .shell {
+        width: min(1220px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 64px;
+      }
+
+      .hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 24px;
+        margin-bottom: 28px;
+        padding: 24px 28px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.82));
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        letter-spacing: -0.04em;
+      }
+
+      .hero p {
+        margin: 10px 0 0;
+        max-width: 720px;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+
+      .pill,
+      .button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(0, 119, 182, 0.16);
+        padding: 11px 16px;
+        font-size: 0.95rem;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .pill {
+        color: var(--primary);
+        background: var(--primary-soft);
+      }
+
+      .button {
+        color: white;
+        background: linear-gradient(135deg, var(--primary), #00a6d6);
+        box-shadow: 0 10px 24px rgba(0, 119, 182, 0.22);
+      }
+
+      .button.secondary {
+        color: var(--primary);
+        background: white;
+        box-shadow: none;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 22px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--surface);
+        backdrop-filter: blur(12px);
+        box-shadow: var(--shadow);
+      }
+
+      .metric {
+        padding: 24px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+        letter-spacing: 0.02em;
+      }
+
+      .metric .value {
+        margin: 14px 0 6px;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        font-weight: 750;
+        letter-spacing: -0.05em;
+      }
+
+      .metric .hint {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .section-card {
+        padding: 22px;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        letter-spacing: -0.03em;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .donut-wrap {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .donut {
+        width: 240px;
+        height: 240px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at center, white 0 34%, transparent 35%),
+          conic-gradient(
+            var(--true) 0deg 104deg,
+            var(--false) 104deg 214deg,
+            var(--misleading) 214deg 292deg,
+            var(--unverifiable) 292deg 360deg
+          );
+        position: relative;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+      }
+
+      .donut-center {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding-top: 2px;
+      }
+
+      .donut-center strong {
+        display: block;
+        font-size: 2rem;
+        letter-spacing: -0.05em;
+      }
+
+      .donut-center span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .legend {
+        display: grid;
+        gap: 14px;
+      }
+
+      .legend-row {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .swatch {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+      }
+
+      .language-list {
+        display: grid;
+        gap: 16px;
+      }
+
+      .language-item {
+        display: grid;
+        gap: 10px;
+      }
+
+      .language-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .rank {
+        display: inline-grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--primary);
+        background: var(--primary-soft);
+      }
+
+      .language-name {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .language-name small {
+        display: block;
+        color: var(--muted);
+        margin-top: 2px;
+        font-size: 0.78rem;
+      }
+
+      .bar {
+        width: 100%;
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.08);
+      }
+
+      .bar > span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--primary), #00b4d8);
+      }
+
+      .line-card {
+        padding: 22px;
+        margin-bottom: 18px;
+      }
+
+      .line-chart {
+        width: 100%;
+        height: auto;
+      }
+
+      .line-chart text {
+        fill: var(--muted);
+        font-size: 12px;
+      }
+
+      .tick-line {
+        stroke: rgba(15, 23, 42, 0.09);
+        stroke-dasharray: 3 5;
+      }
+
+      .summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        color: var(--muted);
+        padding: 18px 6px 0;
+        font-size: 0.94rem;
+      }
+
+      .result-shell {
+        margin-top: 34px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .result-top {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .status-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        font-size: 1.6rem;
+        background: rgba(22, 163, 74, 0.12);
+        color: var(--true);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+      }
+
+      .badge.true {
+        color: #166534;
+        background: rgba(22, 163, 74, 0.12);
+      }
+
+      .badge.false {
+        color: #991b1b;
+        background: rgba(220, 38, 38, 0.12);
+      }
+
+      .badge.misleading {
+        color: #92400e;
+        background: rgba(245, 158, 11, 0.15);
+      }
+
+      .badge.unverifiable {
+        color: #334155;
+        background: rgba(100, 116, 139, 0.14);
+      }
+
+      .result-panel {
+        padding: 22px;
+      }
+
+      .result-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+
+      .mini-card {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .mini-card h3,
+      .result-panel h3,
+      .result-panel h4 {
+        margin: 0 0 10px;
+      }
+
+      .confidence-bar {
+        height: 14px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(15, 23, 42, 0.08);
+      }
+
+      .confidence-bar > span {
+        display: block;
+        width: 87%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--true), #34d399);
+      }
+
+      .source-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .source-card {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        border: 1px solid rgba(0, 119, 182, 0.16);
+        border-radius: 18px;
+        padding: 14px 16px;
+        background: rgba(0, 119, 182, 0.035);
+      }
+
+      .source-card a {
+        color: var(--primary-dark);
+        text-decoration: none;
+        font-size: 0.92rem;
+        word-break: break-all;
+      }
+
+      .source-card strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .api-card {
+        margin-top: 34px;
+        padding: 22px;
+      }
+
+      pre {
+        margin: 0;
+        padding: 18px;
+        overflow-x: auto;
+        border-radius: 18px;
+        background: #0f172a;
+        color: #dbeafe;
+        font-size: 0.88rem;
+        line-height: 1.6;
+      }
+
+      .api-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .note {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 980px) {
+        .grid-3,
+        .dashboard-layout,
+        .donut-wrap,
+        .result-grid,
+        .api-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          flex-direction: column;
+        }
+
+        .hero-actions {
+          justify-content: flex-start;
+        }
+
+        .summary {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <div>
+          <h1>Vachan Live Preview</h1>
+          <p>
+            This no-server preview mirrors the Supabase-backed dashboard, CSV export, structured fact-check result UI,
+            and the new public verify API. It exists because the sandbox here blocks local port binding, so this opens
+            directly from disk instead.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <div class="pill">Auto-refresh every 60s</div>
+          <button class="button secondary" id="exportCsv">Export CSV</button>
+          <a class="button" href="#dashboard">Open Dashboard Preview</a>
+        </div>
+      </section>
+
+      <section id="dashboard">
+        <div class="grid-3">
+          <article class="card metric">
+            <p class="eyebrow">Total Claims Verified</p>
+            <div class="value">1,248</div>
+            <p class="hint">All-time claim records logged anonymously to the `claims` table.</p>
+          </article>
+          <article class="card metric">
+            <p class="eyebrow">Leading Verdict</p>
+            <div class="value">False</div>
+            <p class="hint">383 claims currently trend toward the most common outcome.</p>
+          </article>
+          <article class="card metric">
+            <p class="eyebrow">Unique Languages</p>
+            <div class="value">8</div>
+            <p class="hint">Top-five language buckets currently represent 1,113 logged claims.</p>
+          </article>
+        </div>
+
+        <div class="dashboard-layout">
+          <article class="card section-card">
+            <div class="section-head">
+              <div>
+                <h2>Verdict Breakdown</h2>
+                <p>All-time distribution of verified claim outcomes</p>
+              </div>
+            </div>
+
+            <div class="donut-wrap">
+              <div class="donut">
+                <div class="donut-center">
+                  <div>
+                    <strong>1,248</strong>
+                    <span>claims logged</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="legend">
+                <div class="legend-row">
+                  <span class="swatch" style="background: var(--true)"></span>
+                  <span>True</span>
+                  <strong>361</strong>
+                </div>
+                <div class="legend-row">
+                  <span class="swatch" style="background: var(--false)"></span>
+                  <span>False</span>
+                  <strong>383</strong>
+                </div>
+                <div class="legend-row">
+                  <span class="swatch" style="background: var(--misleading)"></span>
+                  <span>Misleading</span>
+                  <strong>271</strong>
+                </div>
+                <div class="legend-row">
+                  <span class="swatch" style="background: var(--unverifiable)"></span>
+                  <span>Unverifiable</span>
+                  <strong>233</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card section-card">
+            <div class="section-head">
+              <div>
+                <h2>Top 5 Languages</h2>
+                <p>Detected most often across verified claims</p>
+              </div>
+            </div>
+
+            <div class="language-list">
+              <div class="language-item">
+                <div class="language-meta">
+                  <div class="language-name">
+                    <span class="rank">1</span>
+                    <div><strong>English</strong><small>en</small></div>
+                  </div>
+                  <strong>520</strong>
+                </div>
+                <div class="bar"><span style="width: 100%"></span></div>
+              </div>
+
+              <div class="language-item">
+                <div class="language-meta">
+                  <div class="language-name">
+                    <span class="rank">2</span>
+                    <div><strong>Hindi</strong><small>hi</small></div>
+                  </div>
+                  <strong>288</strong>
+                </div>
+                <div class="bar"><span style="width: 55%"></span></div>
+              </div>
+
+              <div class="language-item">
+                <div class="language-meta">
+                  <div class="language-name">
+                    <span class="rank">3</span>
+                    <div><strong>Tamil</strong><small>ta</small></div>
+                  </div>
+                  <strong>122</strong>
+                </div>
+                <div class="bar"><span style="width: 24%"></span></div>
+              </div>
+
+              <div class="language-item">
+                <div class="language-meta">
+                  <div class="language-name">
+                    <span class="rank">4</span>
+                    <div><strong>Bengali</strong><small>bn</small></div>
+                  </div>
+                  <strong>101</strong>
+                </div>
+                <div class="bar"><span style="width: 19%"></span></div>
+              </div>
+
+              <div class="language-item">
+                <div class="language-meta">
+                  <div class="language-name">
+                    <span class="rank">5</span>
+                    <div><strong>Telugu</strong><small>te</small></div>
+                  </div>
+                  <strong>82</strong>
+                </div>
+                <div class="bar"><span style="width: 16%"></span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <article class="card line-card">
+          <div class="section-head">
+            <div>
+              <h2>Claims Per Day</h2>
+              <p>Last 30 days of verification activity</p>
+            </div>
+          </div>
+
+          <svg class="line-chart" viewBox="0 0 980 300" preserveAspectRatio="none" role="img" aria-label="Claims per day line chart">
+            <line class="tick-line" x1="40" y1="42" x2="950" y2="42"></line>
+            <line class="tick-line" x1="40" y1="96" x2="950" y2="96"></line>
+            <line class="tick-line" x1="40" y1="150" x2="950" y2="150"></line>
+            <line class="tick-line" x1="40" y1="204" x2="950" y2="204"></line>
+            <line class="tick-line" x1="40" y1="258" x2="950" y2="258"></line>
+
+            <polyline
+              fill="none"
+              stroke="#0077b6"
+              stroke-width="4"
+              points="40,226 72,218 104,212 136,198 168,206 200,188 232,177 264,194 296,184 328,168 360,156 392,162 424,144 456,132 488,148 520,118 552,112 584,126 616,108 648,96 680,84 712,104 744,92 776,70 808,82 840,58 872,48 904,76 936,63"
+            />
+
+            <g fill="#0077b6">
+              <circle cx="40" cy="226" r="4"></circle>
+              <circle cx="168" cy="206" r="4"></circle>
+              <circle cx="328" cy="168" r="4"></circle>
+              <circle cx="488" cy="148" r="4"></circle>
+              <circle cx="648" cy="96" r="4"></circle>
+              <circle cx="808" cy="82" r="4"></circle>
+              <circle cx="936" cy="63" r="4"></circle>
+            </g>
+
+            <text x="40" y="285">18 Apr</text>
+            <text x="210" y="285">24 Apr</text>
+            <text x="390" y="285">30 Apr</text>
+            <text x="570" y="285">6 May</text>
+            <text x="760" y="285">12 May</text>
+            <text x="905" y="285">18 May</text>
+          </svg>
+        </article>
+
+        <div class="summary">
+          <span>Public analytics powered by anonymous Supabase reads from the `claims` table.</span>
+          <span id="refreshStamp">Last refreshed: just now</span>
+        </div>
+      </section>
+
+      <section class="result-shell">
+        <div class="result-top">
+          <div class="status-icon">✓</div>
+          <div>
+            <h2 style="margin: 0 0 8px">Structured Fact-Check Result</h2>
+            <div class="badge true">Verified True</div>
+            <p style="margin: 12px 0 0; color: var(--muted); line-height: 1.6">
+              The updated results card now shows the verdict, confidence bar, and supporting source citations in a
+              clearer, more trustworthy layout.
+            </p>
+          </div>
+        </div>
+
+        <article class="card result-panel">
+          <div class="result-grid">
+            <div class="mini-card">
+              <h3>Verdict</h3>
+              <div class="badge true">Verified True</div>
+              <p style="margin: 14px 0 0; color: var(--muted); line-height: 1.6">
+                This information has been verified by multiple reliable sources and is presented consistently across the
+                citations below.
+              </p>
+            </div>
+
+            <div class="mini-card">
+              <h3>Confidence Score</h3>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+                <span style="color: var(--muted)">Model confidence</span>
+                <strong>87%</strong>
+              </div>
+              <div class="confidence-bar"><span></span></div>
+              <p style="margin: 14px 0 0; color: var(--muted); line-height: 1.6">
+                Higher percentages indicate stronger model confidence in the current verdict.
+              </p>
+            </div>
+          </div>
+
+          <h3>Claim</h3>
+          <p style="margin-top: 0; line-height: 1.7">
+            “India became the world’s third-largest startup ecosystem in 2024.”
+          </p>
+
+          <h3>Analysis</h3>
+          <p style="margin-top: 0; line-height: 1.7; color: var(--muted)">
+            The claim aligns with recent government and industry summaries that place India among the top global startup
+            ecosystems by volume and market growth. The supporting sources below provide the public context used for the
+            decision.
+          </p>
+
+          <h3>Supporting Sources</h3>
+          <div class="source-grid">
+            <div class="source-card">
+              <div>
+                <strong>Startup India official updates</strong>
+                <a href="https://www.startupindia.gov.in/" target="_blank" rel="noreferrer">https://www.startupindia.gov.in/</a>
+              </div>
+              <span>↗</span>
+            </div>
+            <div class="source-card">
+              <div>
+                <strong>PIB Fact Check reference</strong>
+                <a href="https://pib.gov.in/factcheck.aspx" target="_blank" rel="noreferrer">https://pib.gov.in/factcheck.aspx</a>
+              </div>
+              <span>↗</span>
+            </div>
+            <div class="source-card">
+              <div>
+                <strong>Google Fact Check Explorer</strong>
+                <a href="https://toolbox.google.com/factcheck/explorer" target="_blank" rel="noreferrer">https://toolbox.google.com/factcheck/explorer</a>
+              </div>
+              <span>↗</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="card api-card">
+        <div class="section-head">
+          <div>
+            <h2>Public Verify API</h2>
+            <p>`POST /api/verify` with rate limiting and source URLs</p>
+          </div>
+        </div>
+
+        <div class="api-grid">
+          <pre>{
+  "claim": "Drinking hot water with lemon cures COVID-19",
+  "language": "en"
+}</pre>
+          <pre>{
+  "verdict": "false",
+  "confidence": 0.82,
+  "sources": [
+    "https://toolbox.google.com/factcheck/explorer",
+    "https://pib.gov.in/factcheck.aspx",
+    "https://www.who.int/india"
+  ]
+}</pre>
+        </div>
+
+        <p class="note">
+          The actual route also logs each verified claim to Supabase and enforces 10 requests per IP per minute.
+        </p>
+      </section>
+    </div>
+
+    <script>
+      const csvRows = [
+        ["claim_text", "verdict", "confidence_score", "language_detected", "created_at"],
+        ["India became the world's third-largest startup ecosystem in 2024", "true", "0.87", "en", "2026-05-18T01:20:14.000Z"],
+        ["Drinking hot water with lemon cures COVID-19", "false", "0.82", "en", "2026-05-18T01:17:05.000Z"],
+        ["A clipped speech was shared without its full context", "misleading", "0.68", "hi", "2026-05-18T01:11:42.000Z"]
+      ];
+
+      document.getElementById("exportCsv").addEventListener("click", () => {
+        const csv = csvRows.map((row) => row.map((value) => {
+          if (/[",\n]/.test(value)) return `"${value.replace(/"/g, '""')}"`;
+          return value;
+        }).join(",")).join("\n");
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "vachan-preview-claims.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      });
+
+      const refreshStamp = document.getElementById("refreshStamp");
+      const updateStamp = () => {
+        refreshStamp.textContent = `Last refreshed: ${new Date().toLocaleTimeString("en-IN")}`;
+      };
+      updateStamp();
+      setInterval(updateStamp, 60000);
+    </script>
+  </body>
+  </html>

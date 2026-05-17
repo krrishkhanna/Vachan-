@@ -1,0 +1,75 @@
+<svg width="1440" height="960" viewBox="0 0 1440 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="140" y1="80" x2="1300" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FCFF"/>
+      <stop offset="1" stop-color="#EEF7FF"/>
+    </linearGradient>
+    <linearGradient id="hero2" x1="890" y1="164" x2="1188" y2="232" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0077B6"/>
+      <stop offset="1" stop-color="#00A6D6"/>
+    </linearGradient>
+    <filter id="shadow2" x="160" y="70" width="1120" height="760" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#005082" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="960" fill="url(#bg2)"/>
+  <circle cx="170" cy="100" r="210" fill="#A7DBFF" fill-opacity="0.22"/>
+  <circle cx="1240" cy="120" r="170" fill="#C6EEFF" fill-opacity="0.25"/>
+
+  <g filter="url(#shadow2)">
+    <rect x="182" y="92" width="1076" height="724" rx="34" fill="#FFFFFF" fill-opacity="0.94"/>
+  </g>
+
+  <text x="232" y="156" fill="#0F172A" font-size="52" font-family="Segoe UI, Arial, sans-serif" font-weight="800">Fact-check result experience</text>
+  <text x="232" y="194" fill="#5B6B80" font-size="22" font-family="Segoe UI, Arial, sans-serif">Structured verdict badge, confidence meter, supporting links, and public verify API.</text>
+
+  <rect x="1022" y="118" width="188" height="46" rx="23" fill="url(#hero2)"/>
+  <text x="1064" y="147" fill="white" font-size="19" font-family="Segoe UI, Arial, sans-serif" font-weight="700">POST /api/verify</text>
+
+  <rect x="230" y="240" width="590" height="510" rx="30" fill="#F9FCFF" stroke="#E2EEF8"/>
+  <text x="266" y="286" fill="#5B6B80" font-size="18" font-family="Segoe UI, Arial, sans-serif">Claim checked</text>
+  <text x="266" y="332" fill="#0F172A" font-size="32" font-family="Segoe UI, Arial, sans-serif" font-weight="760">“This video proves that a bridge in Mumbai</text>
+  <text x="266" y="372" fill="#0F172A" font-size="32" font-family="Segoe UI, Arial, sans-serif" font-weight="760">collapsed this morning.”</text>
+
+  <rect x="266" y="412" width="148" height="44" rx="22" fill="#FEF3C7" stroke="#FDE68A"/>
+  <text x="304" y="440" fill="#B45309" font-size="20" font-family="Segoe UI, Arial, sans-serif" font-weight="760">Misleading</text>
+
+  <text x="266" y="500" fill="#0F172A" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Confidence</text>
+  <text x="694" y="500" fill="#0F172A" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="800" text-anchor="end">82%</text>
+  <rect x="266" y="520" width="430" height="18" rx="9" fill="#DCEFFF"/>
+  <rect x="266" y="520" width="352" height="18" rx="9" fill="#F59E0B"/>
+  <text x="266" y="568" fill="#5B6B80" font-size="18" font-family="Segoe UI, Arial, sans-serif">Color-coded verdicts: green=true, red=false, amber=misleading, grey=unverifiable.</text>
+
+  <text x="266" y="628" fill="#0F172A" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Supporting sources</text>
+  <rect x="266" y="648" width="510" height="34" rx="17" fill="#EAF6FF"/>
+  <text x="286" y="670" fill="#0077B6" font-size="17" font-family="Segoe UI, Arial, sans-serif">1. Press Information Bureau clarification</text>
+  <rect x="266" y="692" width="510" height="34" rx="17" fill="#EAF6FF"/>
+  <text x="286" y="714" fill="#0077B6" font-size="17" font-family="Segoe UI, Arial, sans-serif">2. Local authority statement with timestamp</text>
+  <rect x="266" y="736" width="510" height="34" rx="17" fill="#EAF6FF"/>
+  <text x="286" y="758" fill="#0077B6" font-size="17" font-family="Segoe UI, Arial, sans-serif">3. Archived report showing old footage reuse</text>
+
+  <rect x="852" y="240" width="356" height="236" rx="30" fill="#F9FCFF" stroke="#E2EEF8"/>
+  <text x="888" y="286" fill="#0F172A" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="760">Public verify API</text>
+  <text x="888" y="318" fill="#5B6B80" font-size="18" font-family="Segoe UI, Arial, sans-serif">Open endpoint with lightweight IP-based rate limiting.</text>
+
+  <rect x="888" y="350" width="286" height="36" rx="18" fill="#EAF6FF"/>
+  <text x="906" y="373" fill="#0077B6" font-size="17" font-family="SFMono-Regular, Menlo, monospace">{"claim":"...", "language":"en"}</text>
+
+  <rect x="888" y="402" width="286" height="36" rx="18" fill="#ECFDF3"/>
+  <text x="906" y="425" fill="#166534" font-size="16" font-family="SFMono-Regular, Menlo, monospace">{"verdict":"misleading", ...}</text>
+
+  <text x="888" y="460" fill="#5B6B80" font-size="17" font-family="Segoe UI, Arial, sans-serif">Returns verdict, confidence float, and 2-3 source URLs.</text>
+
+  <rect x="852" y="502" width="356" height="248" rx="30" fill="#F9FCFF" stroke="#E2EEF8"/>
+  <text x="888" y="548" fill="#0F172A" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="760">Supabase logging</text>
+  <text x="888" y="580" fill="#5B6B80" font-size="18" font-family="Segoe UI, Arial, sans-serif">Every verified claim is stored anonymously for long-term analytics.</text>
+
+  <rect x="888" y="612" width="286" height="102" rx="24" fill="#FFFFFF" stroke="#E2EEF8"/>
+  <text x="914" y="646" fill="#0F172A" font-size="18" font-family="SFMono-Regular, Menlo, monospace">claim_text</text>
+  <text x="914" y="674" fill="#0F172A" font-size="18" font-family="SFMono-Regular, Menlo, monospace">verdict</text>
+  <text x="914" y="702" fill="#0F172A" font-size="18" font-family="SFMono-Regular, Menlo, monospace">confidence_score</text>
+  <text x="1054" y="646" fill="#5B6B80" font-size="18" font-family="SFMono-Regular, Menlo, monospace">language_detected</text>
+  <text x="1054" y="674" fill="#5B6B80" font-size="18" font-family="SFMono-Regular, Menlo, monospace">source_url</text>
+  <text x="1054" y="702" fill="#5B6B80" font-size="18" font-family="SFMono-Regular, Menlo, monospace">created_at</text>
+</svg>
