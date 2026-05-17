@@ -2,6 +2,9 @@ import { NextResponse } from "next/server"
 
 // This is a server-side API route that will proxy requests to MediaStack
 // This avoids CORS issues that happen when calling the API directly from the browser
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const country = searchParams.get("country") || ""
@@ -29,4 +32,3 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Failed to fetch news data" }, { status: 500 })
   }
 }
-
