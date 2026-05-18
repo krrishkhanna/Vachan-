@@ -3,6 +3,9 @@ import { logClaimVerification, normalizeVerdict } from "@/lib/claim-logging"
 import { rateLimitByIp } from "@/lib/rate-limit"
 import { verifyClaim } from "@/lib/verify-claim"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export async function POST(req: Request) {
   const ipAddress =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||

@@ -2,6 +2,9 @@ import { NextResponse } from "next/server"
 import { logClaimVerification } from "@/lib/claim-logging"
 import { verifyClaim } from "@/lib/verify-claim"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export async function POST(req: Request) {
   try {
     const { text, title, source, sourceUrl } = await req.json()
