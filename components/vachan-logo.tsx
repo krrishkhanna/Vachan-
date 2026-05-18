@@ -1,17 +1,15 @@
-import Image from "next/image"
-
 export function VachanLogo() {
   return (
-    <div className="flex items-center gap-2">
-      <Image
-        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/vachan_logo-removebg-preview-PFNmb7D72iV4nuLVjLj4X4Opwdpc50.png"
-        alt="Vachan Logo"
-        width={120}
-        height={40}
-        className="h-10 w-auto"
-        priority
-      />
+    <div className="flex items-center gap-3">
+      <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#0077b6] text-sm font-black text-white shadow-[0_12px_28px_rgba(0,119,182,0.28)]">
+        V
+      </div>
+      <div className="leading-none">
+        <div className="text-xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">Vachan</div>
+        <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0077b6]">
+          Signal Desk
+        </div>
+      </div>
     </div>
   )
 }
-

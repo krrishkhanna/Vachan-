@@ -1,327 +1,188 @@
-// Sample news data based on the provided inputs
 const newsArticles = [
   {
-    title: '"Modi-Trump Secret Pact" Trends After Diplomatic Cable Leak',
+    title: "AI-Generated Video Falsely Shows a Delhi Doctor Endorsing a Miracle Diabetes Cure",
     content:
-      "A forged document alleging a US-India defense pact favoring Trump's reelection campaign trended with 48K+ tweets. Analysts noted similarities to 2018 nationalist fake news patterns. #ShadowDeal trended for 14 hours before PIB debunked it.",
-    source: "Twitter",
-    sourceUrl: "https://twitter.com/search?q=%23ShadowDeal",
-    hashtags: ["ShadowDeal", "ModiTrump", "FakeNews"],
-    publishedAt: "2025-03-07T14:30:00Z",
-    author: "Fact Check Team",
+      "A fabricated vertical video using a doctor's cloned voice and likeness circulated across messaging groups and short-form video platforms, claiming a kitchen remedy could replace insulin. The clip spread rapidly because it looked like a casual home recording rather than an advertisement.",
+    source: "WhatsApp, Short Video Apps",
+    sourceUrl: "https://www.axios.com/2026/05/06/doctors-ai-deepfakes-misinformation-problem",
+    hashtags: ["DeepfakeHealth", "DoctorAI", "ClaimWatch"],
+    publishedAt: "2026-05-18T10:20:00Z",
+    author: "Health Verification Desk",
     urlToImage: "https://placeholder.svg?height=400&width=600",
     engagementStats: {
-      tweets: 48000,
-      botPercentage: 65,
+      tweets: 28400,
+      botPercentage: 41,
     },
     factCheck: {
       status: "false",
       details:
-        "The alleged diplomatic cable was determined to be a forgery. The document contained several inconsistencies in formatting and language that are not consistent with official diplomatic communications. The Press Information Bureau (PIB) officially debunked this claim within 14 hours of it trending.",
+        "The video is not authentic. It repurposes a real doctor's public photos and overlays a synthetic voice to promote an unverified treatment. No licensed medical authority has endorsed the cure described in the clip.",
       sources: [
-        "Press Information Bureau official statement (March 7, 2025)",
-        "Ministry of External Affairs clarification (March 7, 2025)",
-        "US State Department denial (March 8, 2025)",
+        "American Medical Association warning on medical deepfakes (May 2026)",
+        "Hospital media office denial and identity misuse notice",
+        "Platform moderation notice referencing manipulated media",
       ],
     },
   },
   {
-    title: "AI-Generated Video Claims Mamata Banerjee Resigning Over Farm Protests",
+    title: "Misleading Posts Claim India's New Content Rules Amount to a Blanket Ban on Satire",
     content:
-      "A deepfake of West Bengal's CM announcing resignation garnered 3.2M views, reviving concerns about AI misuse in elections. #FakeMamata trended with 27K tweets, 65% from bot-like accounts.",
-    source: "Facebook, Twitter",
-    sourceUrl: "https://twitter.com/search?q=%23FakeMamata",
-    hashtags: ["FakeMamata", "Deepfake", "WestBengal"],
-    publishedAt: "2025-03-05T10:15:00Z",
-    author: "Digital Forensics Team",
-    urlToImage: "https://placeholder.svg?height=400&width=600",
+      "Posts reacting to India's tougher platform compliance rules framed the changes as a universal ban on satire, memes, and commentary. The viral interpretation spread faster than the actual legal text and triggered calls for mass account migration.",
+    source: "X, Instagram",
+    sourceUrl: "https://www.investing.com/news/stock-market-news/india-tells-global-tech-platforms-to-follow-constitution-after-tougher-content-rules-4509126",
+    hashtags: ["ContentRules", "PlatformPolicy", "Misleading"],
+    publishedAt: "2026-05-17T15:00:00Z",
+    author: "Policy Monitoring Desk",
     engagementStats: {
-      tweets: 19000,
-    },
-    factCheck: {
-      status: "false",
-      details:
-        'The Health Ministry has confirmed that the samples detected in Mumbai sewage were identified as influenza-B, not a new COVID variant. The term "COVID-24" is not recognized by the WHO or any health authority. The rumor appears to have originated from anti-vaccination networks and spread primarily through encrypted messaging apps.',
-      sources: [
-        "Ministry of Health and Family Welfare press release (March 4, 2025)",
-        "BMC Health Department statement (March 4, 2025)",
-        "WHO India clarification (March 5, 2025)",
-      ],
-    },
-  },
-  {
-    title: "BJP IT Cell Accused of Hijacking #SaveFarmer Hashtag",
-    content:
-      "Opposition leaders alleged BJP accounts flooded the trend with pro-government memes, distorting farmer suicide reports. 72% of top tweets used nationalist imagery.",
-    source: "Twitter",
-    sourceUrl: "https://twitter.com/search?q=%23SaveFarmer",
-    hashtags: ["SaveFarmer", "TwitterPolitics", "Hashtag"],
-    publishedAt: "2025-03-03T09:20:00Z",
-    author: "Political Analyst",
-    engagementStats: {
-      tweets: 35000,
+      tweets: 21800,
     },
     factCheck: {
       status: "misleading",
       details:
-        "Analysis of the #SaveFarmer hashtag shows coordinated activity from multiple political parties, not just BJP-affiliated accounts. While there was an increase in nationalist imagery in the trending tweets, the claim that 72% of top tweets used such imagery could not be independently verified. Both pro-government and opposition accounts contributed to changing the narrative of the hashtag.",
+        "The posts exaggerate the scope of the policy shift. The rules raise compliance pressure and takedown risk, but they do not amount to a literal blanket ban on satire or commentary by default.",
       sources: [
-        "Independent social media analysis by MediaWatch (March 3, 2025)",
-        "Twitter Transparency Report excerpt (Q1 2025)",
-        "Digital Rights Foundation report on hashtag manipulation (March 2025)",
+        "Reuters report on India's tougher content rules (February 2026)",
+        "Ministry remarks on constitutional compliance for platforms",
+        "Digital rights analysis of moderation and takedown obligations",
       ],
     },
   },
   {
-    title: '"Hindu Temples Targeted" Hoax Sparks Violence in Rajasthan',
+    title: "False Airport Shutdown Advisory Circulates During North India Heatwave Alerts",
     content:
-      "Fake images of vandalized temples circulated ahead of Ayodhya pilgrimage season, leading to stone-pelting. Police confirmed photos were from 2022 Pakistan incidents.",
-    source: "WhatsApp, Facebook",
-    sourceUrl: "https://facebook.com/search/posts?q=temple%20attack%20rajasthan",
-    hashtags: ["TempleAttack", "Rajasthan", "FakeImages"],
-    publishedAt: "2025-03-02T12:10:00Z",
-    author: "Regional Correspondent",
+      "A screenshot styled like an aviation notice claimed multiple airports would suspend operations because of extreme heat. The message prompted confusion among travelers and was forwarded as a travel alert in family groups.",
+    source: "Telegram, WhatsApp",
+    sourceUrl: "https://toolbox.google.com/factcheck/explorer",
+    hashtags: ["HeatwaveAlert", "AirportNotice", "TravelRumor"],
+    publishedAt: "2026-05-16T08:50:00Z",
+    author: "Civic Misinformation Desk",
     engagementStats: {
-      tweets: 22000,
+      tweets: 14300,
     },
     factCheck: {
       status: "false",
       details:
-        "The images circulated on social media purporting to show recently vandalized Hindu temples in Rajasthan were confirmed by police to be from incidents in Pakistan from 2022. Reverse image searches confirm the origin of these photos. No recent temple vandalization incidents have been reported in the regions claimed in the viral messages.",
+        "The advisory is fabricated. Airports continued operations and the screenshot does not match the format of genuine regulator or airline notices. The alert appears to have been assembled from edited travel graphics.",
       sources: [
-        "Rajasthan Police official statement (March 2, 2025)",
-        "Forensic analysis of viral images by Alt News (March 3, 2025)",
-        "Ministry of Home Affairs clarification (March 3, 2025)",
+        "Airline operations updates showing normal schedules",
+        "Airport customer advisory feeds",
+        "Fact-check search index for the viral screenshot pattern",
       ],
     },
   },
   {
-    title: "Deepfake Audio Purports Kejriwal Admitting Election Fraud",
+    title: "KKR Backs Indian Electric Bus Platform in Deal Valued at Up to $310 Million",
     content:
-      "An AI-generated clip of Delhi's CM went viral among BJP supporters. Metadata showed origin in a Romanian server farm. #KejriwalExposed trended with 33K tweets.",
-    source: "Twitter, WhatsApp",
-    sourceUrl: "https://twitter.com/search?q=%23KejriwalExposed",
-    hashtags: ["KejriwalExposed", "DeepfakeAudio", "ElectionFraud"],
-    publishedAt: "2025-03-01T15:30:00Z",
-    author: "Tech Investigation Team",
+      "Private equity firm KKR said it will invest up to $310 million in a deal tied to Indian electric commercial vehicle growth. The announcement became a bright spot in climate-tech and mobility coverage across Indian business media.",
+    source: "Reuters",
+    sourceUrl: "https://www.investing.com/news/stock-market-news/kkr-to-invest-up-to-310-million-in-india-ebus-deal-4567723",
+    hashtags: ["ClimateTech", "ElectricBuses", "IndiaBusiness"],
+    publishedAt: "2026-05-15T12:10:00Z",
+    author: "Business Desk",
+    urlToImage: "https://placeholder.svg?height=400&width=600",
     engagementStats: {
-      tweets: 33000,
-      botPercentage: 45,
-    },
-    factCheck: {
-      status: "false",
-      details:
-        "Audio forensics experts have confirmed the clip is AI-generated. The voice patterns show inconsistencies typical of synthetic audio. Technical analysis of the file metadata revealed it was created using AI voice cloning software and originated from servers in Romania, not from any verified source connected to the Delhi CM.",
-      sources: [
-        "Delhi CM Office statement (March 1, 2025)",
-        "C-DAC Audio Forensics Lab report (March 2, 2025)",
-        "Cyber Security Agency technical analysis (March 3, 2025)",
-      ],
-    },
-  },
-  {
-    title: '"Free Laptops for BJP Voters" Rumor Stokes Election Law Complaints',
-    content:
-      "EC received 850+ complaints about WhatsApp messages offering devices for voter ID photos. Similar to 2021 misinformation tactics.",
-    source: "WhatsApp",
-    hashtags: ["ElectionBribe", "VoterID", "ElectionCommission"],
-    publishedAt: "2025-02-28T11:45:00Z",
-    author: "Election Watch",
-    engagementStats: {
-      tweets: 15000,
-    },
-    factCheck: {
-      status: "false",
-      details:
-        "The Election Commission has confirmed that no political party is authorized to offer incentives in exchange for votes, which would constitute a violation of election laws. The WhatsApp messages promising free laptops in exchange for voter ID photos appear to be an attempt to either collect personal data or mislead voters. Similar tactics were observed during the 2021 state elections.",
-      sources: [
-        "Election Commission of India press release (February 28, 2025)",
-        "BJP official denial statement (March 1, 2025)",
-        "Cyber Crime Division advisory on election scams (March 2, 2025)",
-      ],
-    },
-  },
-  {
-    title: 'Viral Claim: "ISRO Satellite Spying on Hindu Homes"',
-    content:
-      "Conspiracy theories about GSAT-24's \"anti-religious sensors\" trended in Karnataka. ISRO's clarification tweet gained only 12% engagement of original rumor.",
-    source: "Facebook, WhatsApp",
-    sourceUrl: "https://twitter.com/isro/status/official-statement",
-    hashtags: ["ISRO", "Satellite", "Conspiracy"],
-    publishedAt: "2025-02-25T14:20:00Z",
-    author: "Science Correspondent",
-    engagementStats: {
-      tweets: 18000,
-    },
-    factCheck: {
-      status: "false",
-      details:
-        'ISRO has categorically denied that GSAT-24 or any other Indian satellite has capabilities to target specific religious groups or homes. The satellite is a communication satellite designed for broadcasting and telecommunications purposes. The concept of "anti-religious sensors" has no scientific basis and appears to be fabricated to create communal tension.',
-      sources: [
-        "ISRO official clarification (February 25, 2025)",
-        "Department of Space press statement (February 26, 2025)",
-        "Science and Technology Ministry fact-check (February 27, 2025)",
-      ],
-    },
-  },
-  {
-    title: '"Halal Certification Ban" Misinformation Impacts Food Startups',
-    content:
-      "Fake MHA circulars caused 20% stock drops for Zomato/Blinkit. Home Ministry confirmed no policy changes. #BoycottHalal trended with 41K tweets.",
-    source: "Twitter, WhatsApp",
-    sourceUrl: "https://twitter.com/search?q=%23BoycottHalal",
-    hashtags: ["BoycottHalal", "FoodTech", "StockMarket"],
-    publishedAt: "2025-02-22T08:30:00Z",
-    author: "Business Analyst",
-    engagementStats: {
-      tweets: 41000,
-    },
-    factCheck: {
-      status: "false",
-      details:
-        "The Ministry of Home Affairs has confirmed that no circular banning Halal certification has been issued. The documents circulating on social media were found to contain formatting inconsistencies and incorrect file reference numbers that are not consistent with official MHA communications. The false information caused significant market volatility for food delivery companies.",
-      sources: [
-        "Ministry of Home Affairs official clarification (February 22, 2025)",
-        "SEBI statement on market manipulation (February 23, 2025)",
-        "Zomato and Blinkit investor relations statement (February 24, 2025)",
-      ],
-    },
-  },
-  {
-    title: 'Fake AIIMS Bulletin Claims "Vaccine-Induced Heart Attacks"',
-    content:
-      "Altered letterhead documents alleging 58% cardiac risk post-vaccination spread via encrypted apps. AIIMS cited 2024 study showing 0.3% incidence.",
-    source: "WhatsApp, Telegram",
-    hashtags: ["Vaccine", "AIIMS", "MedicalMisinformation"],
-    publishedAt: "2025-02-20T17:15:00Z",
-    author: "Health Reporter",
-    engagementStats: {
-      tweets: 25000,
-    },
-    factCheck: {
-      status: "false",
-      details:
-        "AIIMS has confirmed that they did not issue any bulletin claiming a 58% cardiac risk from vaccines. The document circulating on social media uses an altered letterhead and contains medical claims that contradict peer-reviewed research. A 2024 comprehensive study cited by AIIMS found only a 0.3% incidence of minor cardiac issues following vaccination, with no statistically significant increase in heart attacks.",
-      sources: [
-        "AIIMS official statement (February 20, 2025)",
-        "Indian Council of Medical Research fact-check (February 21, 2025)",
-        "Journal of Medical Sciences study on vaccine safety (January 2024)",
-      ],
-    },
-  },
-  // Adding verified articles for the Verified tab
-  {
-    title: "Supreme Court Upholds Right to Privacy as Fundamental Right",
-    content:
-      "In a landmark judgment, the Supreme Court of India has unanimously upheld that the right to privacy is a fundamental right protected under the Indian Constitution. The nine-judge bench ruled that privacy is intrinsic to life, liberty, freedom, and dignity, and therefore, is an integral part of Article 21 of the Constitution.",
-    source: "Supreme Court of India",
-    sourceUrl: "https://supremecourt.gov.in/privacy-judgment",
-    hashtags: ["SupremeCourt", "RightToPrivacy", "Constitution"],
-    publishedAt: "2025-03-01T09:30:00Z",
-    author: "Legal Correspondent",
-    engagementStats: {
-      tweets: 56000,
+      tweets: 16400,
     },
     factCheck: {
       status: "true",
       details:
-        "The Supreme Court of India has indeed delivered this judgment upholding the right to privacy as a fundamental right. The judgment was verified through official court records and statements from legal experts. This represents a significant constitutional development in Indian jurisprudence.",
+        "The investment announcement was reported publicly and aligns with the stated funding range and companies involved. Coverage across financial outlets and market reporting confirms the core details.",
       sources: [
-        "Supreme Court of India official judgment (March 1, 2025)",
-        "Bar Council of India statement (March 2, 2025)",
-        "Constitutional experts' analysis published in legal journals",
+        "Reuters report on the e-bus investment deal",
+        "Company statement on platform expansion plans",
+        "Market coverage summarizing the announced funding size",
       ],
     },
   },
   {
-    title: "India's GDP Growth Rate Reaches 7.8% in Q1 2025",
+    title: "European Union Opens Formal Probe into Grok Over Sexual Deepfakes",
     content:
-      "The Ministry of Statistics and Programme Implementation has released the latest GDP figures showing India's economy grew at 7.8% in the first quarter of 2025, exceeding analyst expectations of 7.2%. The growth was primarily driven by manufacturing, services, and agricultural sectors.",
-    source: "Ministry of Statistics",
-    sourceUrl: "https://mospi.gov.in/gdp-q1-2025",
-    hashtags: ["IndianEconomy", "GDP", "EconomicGrowth"],
-    publishedAt: "2025-02-28T11:00:00Z",
-    author: "Economic Affairs Correspondent",
+      "European regulators opened a formal probe after nonconsensual sexualized deepfake images circulated on X through Grok-linked content generation flows. The case intensified the debate over platform accountability and AI safeguards.",
+    source: "Associated Press",
+    sourceUrl: "https://ny1.com/nyc/all-boroughs/ap-top-news/2026/01/26/european-union-opens-investigation-into-musks-ai-chatbot-grok-over-sexual-deepfakes",
+    hashtags: ["Deepfakes", "EUProbe", "AIGovernance"],
+    publishedAt: "2026-05-14T18:35:00Z",
+    author: "Global Tech Policy Desk",
     engagementStats: {
-      tweets: 32000,
+      tweets: 19200,
     },
     factCheck: {
       status: "true",
       details:
-        "The GDP growth figures have been accurately reported and match the official data released by the Ministry of Statistics and Programme Implementation. Independent economists and financial institutions have corroborated these figures through their own analyses of economic indicators.",
+        "The regulatory action and the subject of the probe were widely reported. The claim reflects the public framing of the investigation and the concern over nonconsensual deepfake imagery.",
       sources: [
-        "Ministry of Statistics and Programme Implementation official release (February 28, 2025)",
-        "Reserve Bank of India economic review (March 1, 2025)",
-        "World Bank India economic update (March 3, 2025)",
+        "AP reporting on the EU investigation",
+        "European Commission statement cited in coverage",
+        "Platform safety reporting on deepfake distribution concerns",
       ],
     },
   },
   {
-    title: "ISRO Successfully Launches Chandrayaan-4 Mission to Moon's South Pole",
+    title: "Fabricated Screenshots Claim MEA Issued a Secret Border Alert to Citizens Abroad",
     content:
-      "The Indian Space Research Organisation (ISRO) has successfully launched the Chandrayaan-4 mission from the Satish Dhawan Space Centre. The mission aims to land a rover on the Moon's south pole to conduct experiments on lunar soil and search for water ice in permanently shadowed regions.",
-    source: "ISRO",
-    sourceUrl: "https://isro.gov.in/chandrayaan-4-launch",
-    hashtags: ["ISRO", "Chandrayaan4", "SpaceMission"],
-    publishedAt: "2025-02-15T07:45:00Z",
-    author: "Science and Technology Reporter",
+      "Doctored screenshots mimicking an official fact-check post from India's external affairs ecosystem spread on social media and in travel groups, suggesting urgent border restrictions that were never announced.",
+    source: "X, Messaging Groups",
+    sourceUrl: "https://www.ndtv.com/topic/deepfake",
+    hashtags: ["MEAAlert", "FakeScreenshot", "TravelMisinformation"],
+    publishedAt: "2026-05-13T20:00:00Z",
+    author: "Foreign Affairs Verification Desk",
     engagementStats: {
-      tweets: 89000,
+      tweets: 11700,
     },
     factCheck: {
-      status: "true",
+      status: "false",
       details:
-        "ISRO has successfully launched the Chandrayaan-4 mission as reported. The launch was broadcast live and confirmed by multiple space agencies worldwide. The mission parameters and objectives have been accurately described in the news report.",
+        "The screenshots are fabricated and do not correspond to a real government alert. Official fact-checking channels publicly described similar circulating claims as fake and misleading.",
       sources: [
-        "ISRO official press release (February 15, 2025)",
-        "NASA congratulatory statement (February 15, 2025)",
-        "Live broadcast footage and technical mission parameters",
+        "MEA-linked fact-check handle debunking fabricated social posts",
+        "Official travel advisory channels with no matching alert",
+        "Platform screenshot comparison showing altered typography",
       ],
     },
   },
   {
-    title: "Parliament Passes Universal Healthcare Act with Bipartisan Support",
+    title: "Doctors Warn That AI Deepfakes Are Being Used to Sell Fake Health Products",
     content:
-      "In a rare show of bipartisan cooperation, the Indian Parliament has passed the Universal Healthcare Act, which aims to provide free basic healthcare to all citizens. The legislation includes provisions for free essential medicines, diagnostic services, and emergency care at all public hospitals.",
-    source: "Lok Sabha Secretariat",
-    sourceUrl: "https://loksabha.nic.in/legislation/universal-healthcare-act",
-    hashtags: ["Healthcare", "Parliament", "UniversalHealthcare"],
-    publishedAt: "2025-02-10T16:20:00Z",
-    author: "Parliamentary Affairs Correspondent",
+      "Clinicians and medical organizations are raising alarms after AI-generated videos began impersonating doctors in order to sell unverified supplements and miracle products. The trend has become a public-health and trust issue rather than a novelty problem.",
+    source: "Axios",
+    sourceUrl: "https://www.axios.com/2026/05/06/doctors-ai-deepfakes-misinformation-problem",
+    hashtags: ["MedicalTrust", "AIDeepfakes", "HealthFraud"],
+    publishedAt: "2026-05-12T09:30:00Z",
+    author: "Health Systems Desk",
     engagementStats: {
-      tweets: 67000,
+      tweets: 9500,
     },
     factCheck: {
       status: "true",
       details:
-        "The Universal Healthcare Act has been passed by both houses of Parliament as reported. The details of the legislation have been accurately described, and the bipartisan support has been confirmed through voting records and statements from leaders across political parties.",
+        "The broader warning is real and grounded in documented cases of AI-generated impersonation. Medical groups have publicly called for stronger identity and transparency protections.",
       sources: [
-        "Lok Sabha and Rajya Sabha proceedings (February 10, 2025)",
-        "Ministry of Health and Family Welfare statement (February 11, 2025)",
-        "Joint statement by ruling and opposition party leaders",
+        "Axios reporting on doctors' deepfake misuse",
+        "American Medical Association public warning",
+        "Healthcare privacy and identity protection commentary",
       ],
     },
   },
   {
-    title: "Indian Scientists Discover New Antibiotic Effective Against Superbugs",
+    title: 'Misleading Thread Says Every AI Image Must Now Carry a Global "Mandatory Watermark Label"',
     content:
-      "A team of scientists from the Indian Institute of Science (IISc) has discovered a new antibiotic compound that shows remarkable effectiveness against drug-resistant bacteria, including MRSA and other superbugs. The discovery, published in Nature Medicine, could lead to new treatments for infections that are currently difficult to treat.",
-    source: "Indian Institute of Science",
-    sourceUrl: "https://iisc.ac.in/research/antibiotic-discovery",
-    hashtags: ["Science", "MedicalBreakthrough", "Antibiotics"],
-    publishedAt: "2025-01-25T13:10:00Z",
-    author: "Science Health Reporter",
+      "A viral thread mixed corporate policy experiments, proposed labeling ideas, and regional platform rules into a single claim that every AI-generated image now legally requires a global watermark label.",
+    source: "LinkedIn, X",
+    sourceUrl: "https://time.com/7290050/veo-3-google-misinformation-deepfake/",
+    hashtags: ["AIImages", "WatermarkRules", "MisleadingThread"],
+    publishedAt: "2026-05-11T14:40:00Z",
+    author: "AI Governance Desk",
     engagementStats: {
-      tweets: 45000,
+      tweets: 8700,
     },
     factCheck: {
-      status: "true",
+      status: "misleading",
       details:
-        "The discovery of the new antibiotic compound by IISc scientists has been confirmed through peer-reviewed research published in Nature Medicine. Independent scientists have verified the methodology and results of the study, confirming the potential effectiveness against antibiotic-resistant bacteria.",
+        "Labeling and provenance requirements are evolving across companies and jurisdictions, but there is no single universal rule that every AI image already carries a legally mandatory global watermark.",
       sources: [
-        "Nature Medicine published research paper (January 2025)",
-        "World Health Organization statement on the discovery (January 27, 2025)",
-        "Indian Council of Medical Research validation study (February 2, 2025)",
+        "Coverage on synthetic media and provenance debates",
+        "Platform policy notes on AI-generated content labels",
+        "AI policy analysis describing fragmented rulemaking",
       ],
     },
   },
@@ -379,38 +240,37 @@ export async function fetchIndianNewsFromAPI() {
 function getMockWorldNews() {
   return [
     {
-      title: "Global Climate Summit Reaches Historic Agreement on Emissions",
+      title: "AI Deepfakes Push Health Regulators to Revisit Identity Protections",
       content:
-        "World leaders have reached a landmark agreement at the Global Climate Summit to reduce carbon emissions by 50% by 2030. The agreement, which was signed by 195 countries, includes binding targets and financial commitments to support developing nations in their transition to clean energy.",
-      source: "Reuters",
-      sourceUrl: "https://reuters.com/climate-summit-agreement",
-      url: "https://reuters.com/climate-summit-agreement",
+        "Health organizations and regulators are responding to a rise in AI-generated impersonation videos that use trusted professionals to sell fake remedies and supplements. The issue has quickly moved from niche tech concern to mainstream public-health risk.",
+      source: "Axios",
+      sourceUrl: "https://www.axios.com/2026/05/06/doctors-ai-deepfakes-misinformation-problem",
+      url: "https://www.axios.com/2026/05/06/doctors-ai-deepfakes-misinformation-problem",
       urlToImage: "https://placeholder.svg?height=400&width=600",
-      publishedAt: "2025-03-08T10:30:00Z",
-      author: "Jane Smith",
+      publishedAt: "2026-05-18T10:30:00Z",
+      author: "Global Verification Desk",
       factCheck: {
         status: "unverified",
         details: "This article is from mock data and is ready for fact-checking.",
-        sources: ["Reuters"],
+        sources: ["Axios"],
       },
     },
     {
-      title: "New AI Model Can Predict Extreme Weather Events Weeks in Advance",
+      title: "Europe's Grok Probe Intensifies Pressure on Synthetic Media Guardrails",
       content:
-        "Scientists at MIT have developed a new artificial intelligence model that can predict extreme weather events, such as hurricanes and floods, up to three weeks in advance. The model, which uses deep learning algorithms and satellite data, has shown an 85% accuracy rate in initial tests.",
-      source: "Science Daily",
-      sourceUrl: "https://sciencedaily.com/ai-weather-prediction",
-      url: "https://sciencedaily.com/ai-weather-prediction",
+        "A formal European probe into sexual deepfakes tied to AI content systems is driving a wider debate about provenance, moderation speed, and product accountability for generative platforms.",
+      source: "Associated Press",
+      sourceUrl: "https://ny1.com/nyc/all-boroughs/ap-top-news/2026/01/26/european-union-opens-investigation-into-musks-ai-chatbot-grok-over-sexual-deepfakes",
+      url: "https://ny1.com/nyc/all-boroughs/ap-top-news/2026/01/26/european-union-opens-investigation-into-musks-ai-chatbot-grok-over-sexual-deepfakes",
       urlToImage: "https://placeholder.svg?height=400&width=600",
-      publishedAt: "2025-03-07T14:15:00Z",
-      author: "Dr. Robert Chen",
+      publishedAt: "2026-05-17T14:15:00Z",
+      author: "International Policy Monitor",
       factCheck: {
         status: "unverified",
         details: "This article is from mock data and is ready for fact-checking.",
-        sources: ["Science Daily"],
+        sources: ["Associated Press"],
       },
     },
-    // Add more mock articles as needed
   ]
 }
 
@@ -418,38 +278,37 @@ function getMockWorldNews() {
 function getMockIndianNews() {
   return [
     {
-      title: "India's Renewable Energy Capacity Crosses 150 GW Milestone",
+      title: "India Tightens Platform Compliance Pressure as Deepfake Regulation Debate Grows",
       content:
-        "India has achieved a significant milestone in its clean energy journey by crossing 150 GW of renewable energy capacity. The Ministry of New and Renewable Energy announced that solar power contributes the largest share at 70 GW, followed by wind power at 45 GW, with the remainder coming from hydro, biomass, and other sources.",
-      source: "The Economic Times",
-      sourceUrl: "https://economictimes.com/renewable-energy-milestone",
-      url: "https://economictimes.com/renewable-energy-milestone",
+        "India's tougher content-takedown and platform compliance posture has reignited debate over how democracies should handle deepfakes, misinformation, and constitutional speech protections at scale.",
+      source: "Reuters",
+      sourceUrl: "https://www.investing.com/news/stock-market-news/india-tells-global-tech-platforms-to-follow-constitution-after-tougher-content-rules-4509126",
+      url: "https://www.investing.com/news/stock-market-news/india-tells-global-tech-platforms-to-follow-constitution-after-tougher-content-rules-4509126",
       urlToImage: "https://placeholder.svg?height=400&width=600",
-      publishedAt: "2025-03-08T09:15:00Z",
-      author: "Rahul Sharma",
+      publishedAt: "2026-05-18T09:15:00Z",
+      author: "India Policy Desk",
       factCheck: {
         status: "unverified",
         details: "This article is from mock data and is ready for fact-checking.",
-        sources: ["The Economic Times"],
+        sources: ["Reuters"],
       },
     },
     {
-      title: "Indian Startups Raise Record $5 Billion in Q1 2025",
+      title: "Indian E-Bus Expansion Deal Signals Fresh Momentum for Climate Mobility Funding",
       content:
-        "Indian startups have raised a record $5 billion in funding during the first quarter of 2025, according to a report by Venture Intelligence. The fintech sector led the funding rounds, followed by e-commerce and health tech. The report highlights that 15 new unicorns emerged during this period, bringing India's total unicorn count to 150.",
-      source: "Mint",
-      sourceUrl: "https://livemint.com/startup-funding-q1-2025",
-      url: "https://livemint.com/startup-funding-q1-2025",
+        "A major e-bus investment announcement has put commercial EV infrastructure back in focus across Indian business coverage, with analysts watching how capital, policy, and fleet operators converge over the next phase of deployment.",
+      source: "Reuters",
+      sourceUrl: "https://www.investing.com/news/stock-market-news/kkr-to-invest-up-to-310-million-in-india-ebus-deal-4567723",
+      url: "https://www.investing.com/news/stock-market-news/kkr-to-invest-up-to-310-million-in-india-ebus-deal-4567723",
       urlToImage: "https://placeholder.svg?height=400&width=600",
-      publishedAt: "2025-03-07T11:30:00Z",
-      author: "Priya Mehta",
+      publishedAt: "2026-05-17T11:30:00Z",
+      author: "Climate Mobility Reporter",
       factCheck: {
         status: "unverified",
         details: "This article is from mock data and is ready for fact-checking.",
-        sources: ["Mint"],
+        sources: ["Reuters"],
       },
     },
-    // Add more mock articles as needed
   ]
 }
 
@@ -513,4 +372,3 @@ export function filterArticles(
     return true
   })
 }
-

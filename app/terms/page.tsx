@@ -15,7 +15,7 @@ export default function TermsPage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl">Terms of Service</CardTitle>
-              <CardDescription>Last updated: March 8, 2025</CardDescription>
+              <CardDescription>Last updated: May 19, 2026</CardDescription>
             </CardHeader>
             <CardContent className="prose dark:prose-invert max-w-none">
               <p>Welcome to Vachan. These Terms of Service govern your use of our website and services.</p>
@@ -87,4 +87,3 @@ export default function TermsPage() {
     </div>
   )
 }
-

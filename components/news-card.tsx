@@ -152,47 +152,47 @@ export function NewsCard({ article, isApiArticle = false }: { article: NewsArtic
 
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.3 }}>
-      <Card className="overflow-hidden border border-[#0077b6]/20 hover:border-[#0077b6]/40 transition-all duration-300 hover:shadow-md group news-card">
-        <CardHeader className="pb-3">
+      <Card className="group overflow-hidden rounded-[28px] border border-[#0077b6]/14 bg-white/84 shadow-[0_20px_60px_rgba(0,119,182,0.08)] transition-all duration-300 hover:border-[#0077b6]/30 hover:shadow-[0_24px_70px_rgba(0,119,182,0.13)] dark:bg-slate-950/55">
+        <CardHeader className="pb-4">
+          <div className="mb-4 flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+            <span className="rounded-full bg-[#0077b6]/10 px-3 py-1 text-[#0077b6]">{article.source}</span>
+            {article.publishedAt && <span>{new Date(article.publishedAt).toLocaleDateString("en-GB")}</span>}
+            {article.author && <span>by {article.author}</span>}
+          </div>
+
           <div className="flex justify-between items-start gap-4">
-            <h3 className="text-lg font-semibold group-hover:text-[#0077b6] transition-colors duration-300">
+            <h3 className="text-2xl font-bold leading-tight tracking-[-0.03em] text-slate-900 transition-colors duration-300 group-hover:text-[#0077b6] dark:text-white">
               {article.title}
             </h3>
-            <Badge variant="outline" className={getStatusColor(factCheck.status)}>
-              <span className="flex items-center gap-1">
+            <Badge variant="outline" className={`${getStatusColor(factCheck.status)} shrink-0 border px-3 py-1`}>
+              <span className="flex items-center gap-1.5">
                 {getStatusIcon(factCheck.status)}
                 {getStatusText(factCheck.status)}
               </span>
             </Badge>
           </div>
           {article.hashtags && article.hashtags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {article.hashtags.map((tag, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
-                  className="text-xs bg-[#0077b6]/10 hover:bg-[#0077b6]/20 transition-all duration-300 hover:scale-105"
+                  className="rounded-full border border-[#0077b6]/10 bg-[#0077b6]/8 px-3 py-1 text-[11px] font-medium text-slate-700 transition-all duration-300 hover:bg-[#0077b6]/15 dark:text-slate-200"
                 >
                   #{tag}
                 </Badge>
               ))}
             </div>
           )}
-          {article.publishedAt && (
-            <div className="text-sm text-muted-foreground mt-1">
-              Published: {new Date(article.publishedAt).toLocaleDateString("en-GB")}
-            </div>
-          )}
-          {article.author && <div className="text-sm text-muted-foreground">By: {article.author}</div>}
         </CardHeader>
 
-        <CardContent className="pb-3">
+        <CardContent className="pb-4">
           {article.urlToImage && (
-            <div className="mb-4 rounded-md overflow-hidden">
+            <div className="mb-5 overflow-hidden rounded-[22px]">
               <img
                 src={article.urlToImage || "/placeholder.svg"}
                 alt={article.title}
-                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
+                className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 onError={(e) => {
                   ;(e.target as HTMLImageElement).style.display = "none"
                 }}
@@ -200,7 +200,7 @@ export function NewsCard({ article, isApiArticle = false }: { article: NewsArtic
             </div>
           )}
 
-          <p className="text-foreground">
+          <p className="text-[15px] leading-7 text-slate-700 dark:text-slate-200">
             {expanded ? article.content : truncatedContent}
             {!expanded && hasMoreContent && "..."}
           </p>
@@ -209,7 +209,7 @@ export function NewsCard({ article, isApiArticle = false }: { article: NewsArtic
             <Button
               variant="ghost"
               size="sm"
-              className="mt-2 text-muted-foreground p-0 h-auto hover:text-[#0077b6]"
+              className="mt-3 h-auto p-0 text-sm font-medium text-muted-foreground hover:text-[#0077b6]"
               onClick={() => setExpanded(!expanded)}
             >
               {expanded ? (
@@ -224,43 +224,45 @@ export function NewsCard({ article, isApiArticle = false }: { article: NewsArtic
             </Button>
           )}
 
-          <div className="mt-4 text-sm text-muted-foreground flex items-center justify-between">
+          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl border border-[#0077b6]/10 bg-[#0077b6]/4 px-4 py-3 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
-              <span>Source: {article.source}</span>
+              <span className="font-medium">Source link</span>
               {(article.sourceUrl || article.url) && (
                 <a
                   href={article.sourceUrl || article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-[#0077b6] hover:underline hover:text-[#005f8d] transition-all duration-300"
+                  className="inline-flex items-center text-[#0077b6] transition-all duration-300 hover:text-[#005f8d] hover:underline"
                 >
                   <motion.span whileHover={{ scale: 1.2 }} transition={{ duration: 0.2 }}>
-                    <ExternalLink className="h-3 w-3 ml-1" />
+                    <ExternalLink className="ml-1 h-3 w-3" />
                   </motion.span>
                 </a>
               )}
             </div>
-            {article.engagementStats && <span>{article.engagementStats.tweets.toLocaleString()} tweets</span>}
+            {article.engagementStats && (
+              <span className="font-medium">{article.engagementStats.tweets.toLocaleString("en-IN")} mentions</span>
+            )}
           </div>
 
           {article.engagementStats?.botPercentage && (
-            <div className="mt-1 text-sm text-orange-600 dark:text-orange-400">
-              Bot-like activity: {article.engagementStats.botPercentage}% of engagement
+            <div className="mt-2 text-sm text-orange-600 dark:text-orange-400">
+              Suspicious amplification: {article.engagementStats.botPercentage}% of engagement appears bot-like
             </div>
           )}
         </CardContent>
 
         <Separator />
 
-        <CardFooter className="pt-3 flex justify-between">
+        <CardFooter className="flex justify-between gap-4 pt-4">
           <div className="flex gap-2">
             <Dialog>
               <DialogTrigger asChild>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
-                    variant="outline"
+                    variant="default"
                     size="sm"
-                    className="transition-all duration-200 hover:bg-[#0077b6]/10 border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                    className="bg-[#0077b6] transition-all duration-200 hover:bg-[#005f8d]"
                     onClick={() => {
                       if (isApiArticle && !aiFactCheck) {
                         performAIFactCheck()
@@ -292,7 +294,7 @@ export function NewsCard({ article, isApiArticle = false }: { article: NewsArtic
                 variant="outline"
                 size="sm"
                 onClick={() => setShowTranslateDialog(true)}
-                className="transition-all duration-200 hover:bg-[#0077b6]/10 border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                className="border-[#0077b6]/20 transition-all duration-200 hover:border-[#0077b6]/50 hover:bg-[#0077b6]/8"
               >
                 <Globe className="mr-1 h-4 w-4" /> Translate
               </Button>
@@ -305,7 +307,7 @@ export function NewsCard({ article, isApiArticle = false }: { article: NewsArtic
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowShareDialog(true)}
-                className="text-[#0077b6] hover:text-[#005f8d] hover:bg-[#0077b6]/10 transition-all duration-200"
+                className="text-[#0077b6] transition-all duration-200 hover:bg-[#0077b6]/10 hover:text-[#005f8d]"
               >
                 <Share2 className="mr-1 h-4 w-4" /> Share
               </Button>

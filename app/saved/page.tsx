@@ -163,7 +163,7 @@ export default function SavedArticlesPage() {
       <footer className="bg-card border-t border-border py-6">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm">© 2025 Vachan. All rights reserved.</p>
+            <p className="text-muted-foreground text-sm">© 2026 Vachan. All rights reserved.</p>
             <div className="flex gap-4 mt-4 md:mt-0">
               <a href="/privacy" className="text-muted-foreground hover:text-primary text-sm">
                 Privacy Policy

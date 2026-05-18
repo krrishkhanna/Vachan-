@@ -15,7 +15,7 @@ export default function PrivacyPage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl">Privacy Policy</CardTitle>
-              <CardDescription>Last updated: March 8, 2025</CardDescription>
+              <CardDescription>Last updated: May 19, 2026</CardDescription>
             </CardHeader>
             <CardContent className="prose dark:prose-invert max-w-none">
               <p>
@@ -102,4 +102,3 @@ export default function PrivacyPage() {
     </div>
   )
 }
-

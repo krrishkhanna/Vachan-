@@ -89,7 +89,7 @@ export function CommunitiesSection() {
       icon: <MessageSquare className="h-5 w-5" />,
       category: "finance",
       joined: false,
-      lastMessage: "Market analysis for Q1 2025",
+      lastMessage: "Market analysis for mid-2026 risk sentiment",
       lastMessageTime: "3h ago",
       imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/finance-community-image.jpg",
     },
@@ -290,4 +290,3 @@ export function CommunitiesSection() {
     </Card>
   )
 }
-

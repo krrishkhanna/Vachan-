@@ -12,7 +12,19 @@ import {
   getArticlesByFactCheckStatus,
   filterArticles,
 } from "@/lib/news-data"
-import { MoonIcon, SunIcon, Globe, RefreshCw, ShieldCheck, BarChart3, Languages, Sparkles } from "lucide-react"
+import {
+  MoonIcon,
+  SunIcon,
+  Globe,
+  RefreshCw,
+  ShieldCheck,
+  BarChart3,
+  Languages,
+  Sparkles,
+  Newspaper,
+  Radar,
+  ArrowUpRight,
+} from "lucide-react"
 import { useTheme } from "next-themes"
 import { ReadabilitySettings } from "@/components/readability-settings"
 import { EnhancedChatbot } from "@/components/enhanced-chatbot"
@@ -55,6 +67,15 @@ const MainPageCursorEffect = () => {
     </div>
   )
 }
+
+const feedTabs = [
+  { value: "trending", label: "Signal" },
+  { value: "latest", label: "Latest" },
+  { value: "verified", label: "Verified" },
+  { value: "false", label: "False" },
+  { value: "indian", label: "India" },
+  { value: "world", label: "World" },
+]
 
 export default function MainPage() {
   const [articles, setArticles] = useState<any[]>([])
@@ -204,10 +225,10 @@ export default function MainPage() {
                 variant="outline"
                 size="sm"
                 onClick={refreshNews}
-                className="transition-all duration-200 hover:bg-background/10 hover:shadow-sm border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                className="border-[#0077b6]/20 bg-white/70 transition-all duration-200 hover:border-[#0077b6]/50 hover:bg-white dark:bg-slate-950/50"
               >
                 <RefreshCw className="mr-1 h-4 w-4" />
-                Refresh News
+                Refresh feed
               </Button>
             </motion.div>
             <AuthButton />
@@ -230,7 +251,7 @@ export default function MainPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setReadabilityOpen(true)}
-                className="transition-all duration-200 hover:bg-background/10 hover:shadow-sm border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                className="border-[#0077b6]/20 bg-white/70 transition-all duration-200 hover:border-[#0077b6]/50 hover:bg-white dark:bg-slate-950/50"
               >
                 Readability
               </Button>
@@ -240,17 +261,17 @@ export default function MainPage() {
                 variant="outline"
                 size="sm"
                 onClick={openTranslationExtension}
-                className="transition-all duration-200 hover:bg-background/10 hover:shadow-sm border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                className="border-[#0077b6]/20 bg-white/70 transition-all duration-200 hover:border-[#0077b6]/50 hover:bg-white dark:bg-slate-950/50"
               >
                 <Globe className="mr-1 h-4 w-4" /> Translate
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                variant="outline"
+                variant="default"
                 size="sm"
                 onClick={() => router.push("/chat")}
-                className="transition-all duration-200 hover:bg-background/10 hover:shadow-sm border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                className="bg-[#0077b6] transition-all duration-200 hover:bg-[#005f8d]"
               >
                 Aria Factbot
               </Button>
@@ -345,14 +366,60 @@ export default function MainPage() {
           </div>
         </motion.section>
 
+        <section className="mb-8 grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-[28px] border border-[#0077b6]/14 bg-white/78 p-6 shadow-[0_16px_50px_rgba(0,119,182,0.08)] backdrop-blur dark:bg-slate-950/50">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#0077b6]">Editorial feed</p>
+                <h2 className="mt-2 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">
+                  Today&apos;s verification desk
+                </h2>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
+                  High-signal claims, current coverage, and evidence-first review surfaces designed to feel like a
+                  live newsroom instead of a generic content list.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-[#0077b6] p-3 text-white shadow-[0_12px_28px_rgba(0,119,182,0.25)]">
+                <Newspaper className="h-5 w-5" />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
+            <div className="rounded-[24px] border border-[#0077b6]/14 bg-white/78 p-4 backdrop-blur dark:bg-slate-950/50">
+              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Coverage</p>
+              <p className="mt-2 text-2xl font-bold tracking-tight">6 feeds</p>
+              <p className="mt-1 text-sm text-muted-foreground">Signal, latest, verified, false, India, world</p>
+            </div>
+            <div className="rounded-[24px] border border-[#0077b6]/14 bg-white/78 p-4 backdrop-blur dark:bg-slate-950/50">
+              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Workflow</p>
+              <p className="mt-2 text-2xl font-bold tracking-tight">1-click verify</p>
+              <p className="mt-1 text-sm text-muted-foreground">Confidence, citations, and persistent logging</p>
+            </div>
+            <div className="rounded-[24px] border border-[#0077b6]/14 bg-white/78 p-4 backdrop-blur dark:bg-slate-950/50">
+              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Ops view</p>
+              <p className="mt-2 text-2xl font-bold tracking-tight">Live</p>
+              <p className="mt-1 text-sm text-muted-foreground">Dashboard refreshes every 60 seconds</p>
+            </div>
+          </div>
+        </section>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <div className="col-span-1 md:col-span-2">
             <div className="space-y-6">
               <Tabs defaultValue="trending">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
-                  <TabsList className="bg-[#0077b6]/10 p-1 relative overflow-hidden">
+                <div className="mb-6 rounded-[28px] border border-[#0077b6]/14 bg-white/78 p-4 shadow-[0_16px_40px_rgba(0,119,182,0.07)] backdrop-blur dark:bg-slate-950/50">
+                  <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0077b6]">Feed channels</p>
+                      <p className="mt-1 text-sm text-muted-foreground">Switch between claim queues and region-specific coverage.</p>
+                    </div>
+                    <NewsFilters onFilterChange={handleFilterChange} activeFilters={activeFilters} />
+                  </div>
+
+                  <TabsList className="relative h-auto flex-wrap justify-start gap-2 rounded-2xl bg-[#0077b6]/8 p-2">
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-[#0077b6]/5 to-transparent"
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#0077b6]/6 to-transparent"
                       animate={{
                         x: [0, 100, 0],
                         opacity: [0.3, 0.5, 0.3],
@@ -363,24 +430,23 @@ export default function MainPage() {
                         repeatType: "reverse",
                       }}
                     />
-                    {["trending", "latest", "verified", "false", "indian", "world"].map((tab) => (
+                    {feedTabs.map((tab) => (
                       <TabsTrigger
-                        key={tab}
-                        value={tab}
-                        className="data-[state=active]:bg-[#0077b6] data-[state=active]:text-white transition-all duration-200 relative group z-10"
+                        key={tab.value}
+                        value={tab.value}
+                        className="relative z-10 rounded-xl border border-transparent px-4 py-2 text-sm font-semibold data-[state=active]:border-[#0077b6]/20 data-[state=active]:bg-white data-[state=active]:text-[#0077b6] dark:data-[state=active]:bg-slate-900"
                       >
-                        {tab === "trending" && (
+                        {tab.value === "trending" && (
                           <motion.span
                             className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full opacity-70"
                             animate={{ scale: [1, 1.5, 1] }}
                             transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
                           />
                         )}
-                        <span className="capitalize">{tab}</span>
+                        <span>{tab.label}</span>
                       </TabsTrigger>
                     ))}
                   </TabsList>
-                  <NewsFilters onFilterChange={handleFilterChange} activeFilters={activeFilters} />
                 </div>
 
                 <TabsContent value="trending" className="space-y-6 transition-all duration-300 animate-in fade-in-50">
@@ -554,7 +620,27 @@ export default function MainPage() {
             </div>
           </div>
           <div className="col-span-1">
-            <div className="space-y-6">
+            <div className="space-y-6 md:sticky md:top-24">
+              <div className="rounded-[28px] border border-[#0077b6]/14 bg-white/78 p-5 shadow-[0_16px_45px_rgba(0,119,182,0.08)] backdrop-blur dark:bg-slate-950/50">
+                <div className="mb-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0077b6]">Brand posture</p>
+                    <h3 className="mt-1 text-xl font-bold tracking-tight">Vachan Signal Desk</h3>
+                  </div>
+                  <div className="rounded-2xl bg-[#0077b6]/10 p-3 text-[#0077b6]">
+                    <Radar className="h-5 w-5" />
+                  </div>
+                </div>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <div className="rounded-2xl border border-[#0077b6]/10 bg-[#0077b6]/5 p-3">
+                    Reframed as a live verification product with clearer evidence surfaces and sharper editorial pacing.
+                  </div>
+                  <Link href="/dashboard" className="flex items-center justify-between rounded-2xl border border-[#0077b6]/10 p-3 text-slate-900 transition hover:border-[#0077b6]/30 dark:text-white">
+                    <span>Open public analytics</span>
+                    <ArrowUpRight className="h-4 w-4 text-[#0077b6]" />
+                  </Link>
+                </div>
+              </div>
               <CommunitiesSection />
             </div>
           </div>
@@ -564,7 +650,7 @@ export default function MainPage() {
       <footer className="bg-card border-t border-border py-6">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm">© 2025 Vachan. All rights reserved.</p>
+            <p className="text-muted-foreground text-sm">© 2026 Vachan. All rights reserved.</p>
             <div className="flex gap-4 mt-4 md:mt-0">
               <a
                 href="/privacy"
