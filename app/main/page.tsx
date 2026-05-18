@@ -12,7 +12,7 @@ import {
   getArticlesByFactCheckStatus,
   filterArticles,
 } from "@/lib/news-data"
-import { MoonIcon, SunIcon, Globe, RefreshCw } from "lucide-react"
+import { MoonIcon, SunIcon, Globe, RefreshCw, ShieldCheck, BarChart3, Languages, Sparkles } from "lucide-react"
 import { useTheme } from "next-themes"
 import { ReadabilitySettings } from "@/components/readability-settings"
 import { EnhancedChatbot } from "@/components/enhanced-chatbot"
@@ -260,6 +260,91 @@ export default function MainPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
+        <motion.section
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="mb-8 overflow-hidden rounded-[28px] border border-[#0077b6]/20 bg-white/80 p-6 shadow-[0_18px_55px_rgba(0,119,182,0.12)] backdrop-blur dark:bg-slate-950/50"
+        >
+          <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+            <div>
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#0077b6]/20 bg-[#0077b6]/10 px-3 py-1 text-sm font-medium text-[#0077b6]">
+                <Sparkles className="h-4 w-4" />
+                Live misinformation detection and evidence-backed verification
+              </div>
+              <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-slate-900 dark:text-white md:text-5xl">
+                Production-ready fact checking for viral claims, breaking news, and public trust.
+              </h1>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
+                Vachan now combines live claim verification, a public analytics dashboard, persistent Supabase logging,
+                confidence scoring, and multilingual source-backed analysis in one workflow.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button className="bg-[#0077b6] hover:bg-[#005f8d]" onClick={() => router.push("/dashboard")}>
+                  <BarChart3 className="mr-2 h-4 w-4" />
+                  Open Live Dashboard
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                  onClick={() => router.push("/chat")}
+                >
+                  <ShieldCheck className="mr-2 h-4 w-4" />
+                  Verify a Claim
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-[#0077b6]/30 hover:border-[#0077b6]/60"
+                  onClick={refreshNews}
+                >
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  Refresh Coverage
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-[#0077b6]/20 bg-[#0077b6]/5 p-4">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0077b6] text-white">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold">Persistent claim logging</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Every successful verification is stored in Supabase for public analytics and export.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[#0077b6]/20 bg-[#0077b6]/5 p-4">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0077b6] text-white">
+                  <BarChart3 className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold">Live public dashboard</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Verdict mix, 30-day trends, top languages, and recent claims refresh every 60 seconds.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[#0077b6]/20 bg-[#0077b6]/5 p-4">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0077b6] text-white">
+                  <Languages className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold">Multilingual evidence</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Language detection, source-backed verdicts, and readable confidence scoring in one card.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[#0077b6]/20 bg-[#0077b6]/5 p-4">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0077b6] text-white">
+                  <Globe className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold">Public API ready</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  External clients can hit `/api/verify` with rate limiting and structured JSON responses.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <div className="col-span-1 md:col-span-2">
             <div className="space-y-6">
@@ -516,4 +601,3 @@ export default function MainPage() {
     </div>
   )
 }
-
