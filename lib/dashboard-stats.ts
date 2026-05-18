@@ -3,7 +3,9 @@ import { supabase } from "@/lib/supabase"
 type ClaimVerdict = "true" | "false" | "misleading" | "unverifiable"
 
 interface ClaimRow {
+  claim_text: string
   verdict: ClaimVerdict
+  confidence_score: number
   language_detected: string
   created_at: string
 }
@@ -27,6 +29,7 @@ export interface DashboardStats {
     label: string
     count: number
   }>
+  latestClaims: DashboardRecentClaim[]
   generatedAt: string
 }
 
@@ -35,6 +38,13 @@ export interface DashboardExportClaim {
   verdict: ClaimVerdict
   confidence_score: number
   language_detected: string
+  created_at: string
+}
+
+export interface DashboardRecentClaim {
+  claim_text: string
+  verdict: ClaimVerdict
+  confidence_score: number
   created_at: string
 }
 
@@ -73,6 +83,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     verdictBreakdown: buildVerdictBreakdown(claimRows),
     claimsPerDay: buildClaimsPerDay(claimRows),
     topLanguages: topLanguagesSummary.topLanguages,
+    latestClaims: buildLatestClaims(claimRows),
     generatedAt: new Date().toISOString(),
   }
 }
@@ -94,7 +105,7 @@ async function fetchAllClaimRows() {
   while (true) {
     const { data, error } = await supabase
       .from("claims")
-      .select("verdict, language_detected, created_at")
+      .select("claim_text, verdict, confidence_score, language_detected, created_at")
       .order("created_at", { ascending: false })
       .range(from, from + PAGE_SIZE - 1)
 
@@ -187,6 +198,15 @@ function buildTopLanguages(rows: ClaimRow[]) {
     distinctLanguages: languageCounts.size,
     topLanguages,
   }
+}
+
+function buildLatestClaims(rows: ClaimRow[]): DashboardRecentClaim[] {
+  return rows.slice(0, 10).map((row) => ({
+    claim_text: row.claim_text,
+    verdict: normalizeVerdict(row.verdict),
+    confidence_score: Number(row.confidence_score ?? 0),
+    created_at: row.created_at,
+  }))
 }
 
 function normalizeVerdict(verdict: string): ClaimVerdict {

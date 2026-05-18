@@ -1,31 +1,55 @@
-const WINDOW_MS = 60_000
+import { Ratelimit } from "@upstash/ratelimit"
+import { Redis } from "@upstash/redis"
+
 const REQUEST_LIMIT = 10
+const WINDOW = "1 m"
 
-const requestStore = new Map<string, number[]>()
+let ratelimitInstance: Ratelimit | null = null
+let loggedMissingConfig = false
 
-export function rateLimitByIp(ipAddress: string) {
-  const now = Date.now()
-  const recentRequests = (requestStore.get(ipAddress) ?? []).filter((timestamp) => now - timestamp < WINDOW_MS)
+function getRatelimit() {
+  if (ratelimitInstance) {
+    return ratelimitInstance
+  }
 
-  if (recentRequests.length >= REQUEST_LIMIT) {
-    requestStore.set(ipAddress, recentRequests)
+  const url = process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN
 
-    const oldestRequest = recentRequests[0]
-    const retryAfterSeconds = Math.max(1, Math.ceil((WINDOW_MS - (now - oldestRequest)) / 1000))
+  if (!url || !token) {
+    if (!loggedMissingConfig) {
+      loggedMissingConfig = true
+      console.warn("Upstash rate limiting is disabled because Redis environment variables are missing.")
+    }
 
+    return null
+  }
+
+  ratelimitInstance = new Ratelimit({
+    redis: new Redis({ url, token }),
+    limiter: Ratelimit.fixedWindow(REQUEST_LIMIT, WINDOW),
+    analytics: true,
+    prefix: "vachan:verify",
+  })
+
+  return ratelimitInstance
+}
+
+export async function rateLimitByIp(ipAddress: string) {
+  const ratelimit = getRatelimit()
+
+  if (!ratelimit) {
     return {
-      success: false,
-      retryAfterSeconds,
-      remaining: 0,
+      success: true,
+      retryAfterSeconds: 0,
+      remaining: REQUEST_LIMIT,
     }
   }
 
-  recentRequests.push(now)
-  requestStore.set(ipAddress, recentRequests)
+  const result = await ratelimit.limit(ipAddress || "unknown")
 
   return {
-    success: true,
-    retryAfterSeconds: 0,
-    remaining: Math.max(0, REQUEST_LIMIT - recentRequests.length),
+    success: result.success,
+    retryAfterSeconds: result.success ? 0 : Math.max(1, Math.ceil((result.reset - Date.now()) / 1000)),
+    remaining: result.remaining,
   }
 }

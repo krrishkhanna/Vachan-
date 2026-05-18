@@ -59,6 +59,8 @@ export function FactCheckResult({ article, aiFactCheck }: FactCheckResultProps) 
           url: generateSourceUrl(source),
         }))
 
+  const confidenceValue = Math.max(0, Math.min(100, aiFactCheck?.confidence ?? 0))
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "true":
@@ -75,13 +77,13 @@ export function FactCheckResult({ article, aiFactCheck }: FactCheckResultProps) 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "true":
-        return "bg-green-100 text-green-800"
+        return "bg-green-100 text-green-800 border-green-200"
       case "false":
-        return "bg-red-100 text-red-800"
+        return "bg-red-100 text-red-800 border-red-200"
       case "misleading":
-        return "bg-amber-100 text-amber-800"
+        return "bg-amber-100 text-amber-800 border-amber-200"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-slate-100 text-slate-800 border-slate-200"
     }
   }
 
@@ -109,6 +111,18 @@ export function FactCheckResult({ article, aiFactCheck }: FactCheckResultProps) 
       default:
         return "This information could not be verified confidently."
     }
+  }
+
+  const getConfidenceBarClass = (confidence: number) => {
+    if (confidence > 75) {
+      return "bg-gradient-to-r from-emerald-500 to-green-400"
+    }
+
+    if (confidence >= 50) {
+      return "bg-gradient-to-r from-amber-500 to-yellow-400"
+    }
+
+    return "bg-gradient-to-r from-red-500 to-rose-400"
   }
 
   const generateSourceUrl = (source: string) => {
@@ -229,7 +243,13 @@ export function FactCheckResult({ article, aiFactCheck }: FactCheckResultProps) 
           <h3 className="text-lg font-semibold flex items-center gap-2">
             {getStatusText(normalizedStatus)}
             <Badge variant="outline" className={getStatusColor(normalizedStatus)}>
-              {getStatusText(normalizedStatus)}
+              {normalizedStatus === "true"
+                ? "True"
+                : normalizedStatus === "false"
+                  ? "False"
+                  : normalizedStatus === "misleading"
+                    ? "Misleading"
+                    : "Unverifiable"}
             </Badge>
           </h3>
           <p className="text-gray-600 mt-1">{getStatusDescription(normalizedStatus)}</p>
@@ -248,7 +268,13 @@ export function FactCheckResult({ article, aiFactCheck }: FactCheckResultProps) 
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-sm font-medium text-muted-foreground">Verdict</span>
                   <Badge variant="outline" className={getStatusColor(normalizedStatus)}>
-                    {getStatusText(normalizedStatus)}
+                    {normalizedStatus === "true"
+                      ? "True"
+                      : normalizedStatus === "false"
+                        ? "False"
+                        : normalizedStatus === "misleading"
+                          ? "Misleading"
+                          : "Unverifiable"}
                   </Badge>
                 </div>
                 <p className="mt-3 text-sm text-muted-foreground">{getStatusDescription(normalizedStatus)}</p>
@@ -257,18 +283,12 @@ export function FactCheckResult({ article, aiFactCheck }: FactCheckResultProps) 
               <div className="rounded-xl border border-[#0077b6]/20 bg-background p-4">
                 <div className="flex items-center justify-between gap-3 mb-2">
                   <span className="text-sm font-medium text-muted-foreground">Confidence Score</span>
-                  <span className="font-semibold">{aiFactCheck?.confidence ?? "N/A"}{aiFactCheck ? "%" : ""}</span>
+                  <span className="font-semibold">{aiFactCheck ? `${confidenceValue}%` : "N/A"}</span>
                 </div>
                 <div className="h-3 rounded-full bg-muted overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      (aiFactCheck?.confidence ?? 0) >= 80
-                        ? "bg-green-500"
-                        : (aiFactCheck?.confidence ?? 0) >= 60
-                          ? "bg-amber-500"
-                          : "bg-gray-400"
-                    }`}
-                    style={{ width: `${aiFactCheck?.confidence ?? 0}%` }}
+                    className={`h-full rounded-full transition-all duration-500 ${getConfidenceBarClass(confidenceValue)}`}
+                    style={{ width: `${confidenceValue}%` }}
                   />
                 </div>
                 <p className="mt-3 text-sm text-muted-foreground">
@@ -351,17 +371,11 @@ export function FactCheckResult({ article, aiFactCheck }: FactCheckResultProps) 
               <div className="flex items-center gap-2">
                 <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full ${
-                      aiFactCheck.confidence > 80
-                        ? "bg-green-500"
-                        : aiFactCheck.confidence > 60
-                          ? "bg-yellow-500"
-                          : "bg-red-500"
-                    }`}
+                    className={`h-full rounded-full ${getConfidenceBarClass(confidenceValue)}`}
                     style={{ width: `${aiFactCheck.confidence}%` }}
                   ></div>
                 </div>
-                <span>{aiFactCheck.confidence}%</span>
+                <span>{confidenceValue}%</span>
               </div>
             </div>
 

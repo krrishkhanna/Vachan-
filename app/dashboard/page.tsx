@@ -5,13 +5,16 @@ import { VachanLogo } from "@/components/vachan-logo"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { toCsv } from "@/lib/csv"
 import { supabase } from "@/lib/supabase"
 import { useToast } from "@/hooks/use-toast"
 import { Download, MoonIcon, SunIcon, Globe2, PieChart as PieChartIcon, RefreshCw, Shield, TrendingUp } from "lucide-react"
 import { useTheme } from "next-themes"
 import Link from "next/link"
+import Papa from "papaparse"
 import {
+  Bar,
+  BarChart,
+  CartesianGrid,
   Cell,
   Legend,
   Line,
@@ -43,11 +46,18 @@ interface DashboardStats {
     label: string
     count: number
   }>
+  latestClaims: Array<{
+    claim_text: string
+    verdict: "true" | "false" | "misleading" | "unverifiable"
+    confidence_score: number
+    created_at: string
+  }>
   generatedAt: string
 }
 
 type VerdictBreakdownItem = DashboardStats["verdictBreakdown"][number]
 type LanguageItem = DashboardStats["topLanguages"][number]
+type RecentClaimItem = DashboardStats["latestClaims"][number]
 
 export default function DashboardPage() {
   const { resolvedTheme, setTheme } = useTheme()
@@ -140,7 +150,6 @@ export default function DashboardPage() {
   const distinctLanguageCount = stats?.distinctLanguages ?? 0
   const totalLanguageMentions =
     stats?.topLanguages.reduce((sum: number, entry: LanguageItem) => sum + entry.count, 0) ?? 0
-  const maxLanguageCount = stats?.topLanguages[0]?.count ?? 0
 
   const exportLatestClaims = async () => {
     setIsExporting(true)
@@ -156,13 +165,15 @@ export default function DashboardPage() {
         throw exportError
       }
 
-      const csv = toCsv(data ?? [], ["claim_text", "verdict", "confidence_score", "language_detected", "created_at"])
+      const csv = Papa.unparse(data ?? [], {
+        columns: ["claim_text", "verdict", "confidence_score", "language_detected", "created_at"],
+      })
 
       const csvBlob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
       const downloadUrl = URL.createObjectURL(csvBlob)
       const link = document.createElement("a")
       link.href = downloadUrl
-      link.download = `vachan-claims-${new Date().toISOString().slice(0, 10)}.csv`
+      link.download = "claims.csv"
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
@@ -325,40 +336,21 @@ export default function DashboardPage() {
                   </CardTitle>
                   <CardDescription>Most common detected languages across all verified claims</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="h-[360px]">
                   {isLoading ? (
                     <DashboardLoadingCopy message="Loading language rankings..." />
                   ) : !stats?.topLanguages.length ? (
                     <DashboardLoadingCopy message="No language detections are available yet." />
                   ) : (
-                    <div className="space-y-4">
-                      {stats.topLanguages.map((entry: LanguageItem, index: number) => {
-                        const width = maxLanguageCount > 0 ? Math.max((entry.count / maxLanguageCount) * 100, 10) : 0
-
-                        return (
-                          <div key={entry.language} className="space-y-2">
-                            <div className="flex items-center justify-between gap-4">
-                              <div className="flex items-center gap-3">
-                                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0077b6]/10 text-sm font-semibold text-[#0077b6]">
-                                  {index + 1}
-                                </span>
-                                <div>
-                                  <p className="font-medium">{entry.label}</p>
-                                  <p className="text-xs text-muted-foreground uppercase tracking-wide">{entry.language}</p>
-                                </div>
-                              </div>
-                              <span className="text-sm font-semibold">{entry.count.toLocaleString("en-IN")}</span>
-                            </div>
-                            <div className="h-2 rounded-full bg-muted overflow-hidden">
-                              <div
-                                className="h-full rounded-full bg-gradient-to-r from-[#0077b6] to-[#00b4d8]"
-                                style={{ width: `${width}%` }}
-                              />
-                            </div>
-                          </div>
-                        )
-                      })}
-                    </div>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={stats.topLanguages} layout="vertical" margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
+                        <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                        <XAxis type="number" allowDecimals={false} />
+                        <YAxis dataKey="label" type="category" width={90} tickLine={false} axisLine={false} />
+                        <Tooltip formatter={(value: number) => value.toLocaleString("en-IN")} />
+                        <Bar dataKey="count" radius={[0, 10, 10, 0]} fill="#0077b6" />
+                      </BarChart>
+                    </ResponsiveContainer>
                   )}
                 </CardContent>
               </Card>
@@ -399,6 +391,53 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
+            <Card>
+              <CardHeader>
+                <CardTitle>Latest 10 Claims</CardTitle>
+                <CardDescription>Most recently verified claims from the public `claims` table</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isLoading ? (
+                  <DashboardLoadingCopy message="Loading recent claims..." />
+                ) : !stats?.latestClaims.length ? (
+                  <DashboardLoadingCopy message="No claims have been logged yet." />
+                ) : (
+                  <div className="overflow-x-auto rounded-xl border">
+                    <table className="w-full min-w-[720px] text-sm">
+                      <thead className="bg-muted/50">
+                        <tr>
+                          <th className="px-4 py-3 text-left font-medium">Claim</th>
+                          <th className="px-4 py-3 text-left font-medium">Verdict</th>
+                          <th className="px-4 py-3 text-left font-medium">Confidence</th>
+                          <th className="px-4 py-3 text-left font-medium">Created</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {stats.latestClaims.map((claim: RecentClaimItem, index: number) => (
+                          <tr key={`${claim.created_at}-${index}`} className="border-t align-top">
+                            <td className="px-4 py-3 max-w-[420px]">
+                              <p className="line-clamp-2">{claim.claim_text}</p>
+                            </td>
+                            <td className="px-4 py-3">
+                              <Badge variant="outline" className={getVerdictBadgeClass(claim.verdict)}>
+                                {formatVerdictLabel(claim.verdict)}
+                              </Badge>
+                            </td>
+                            <td className="px-4 py-3 font-medium">
+                              {Math.round(Number(claim.confidence_score) * 100)}%
+                            </td>
+                            <td className="px-4 py-3 text-muted-foreground">
+                              {new Date(claim.created_at).toLocaleString("en-IN")}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-sm text-muted-foreground">
               <span>Public analytics powered by anonymous Supabase reads from the `claims` table.</span>
               <span>
@@ -435,4 +474,30 @@ export default function DashboardPage() {
 
 function DashboardLoadingCopy({ message }: { message: string }) {
   return <div className="h-full flex items-center justify-center text-sm text-muted-foreground">{message}</div>
+}
+
+function formatVerdictLabel(verdict: RecentClaimItem["verdict"]) {
+  switch (verdict) {
+    case "true":
+      return "True"
+    case "false":
+      return "False"
+    case "misleading":
+      return "Misleading"
+    default:
+      return "Unverifiable"
+  }
+}
+
+function getVerdictBadgeClass(verdict: RecentClaimItem["verdict"]) {
+  switch (verdict) {
+    case "true":
+      return "border-green-200 bg-green-50 text-green-700"
+    case "false":
+      return "border-red-200 bg-red-50 text-red-700"
+    case "misleading":
+      return "border-amber-200 bg-amber-50 text-amber-700"
+    default:
+      return "border-slate-200 bg-slate-50 text-slate-700"
+  }
 }

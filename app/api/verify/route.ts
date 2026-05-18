@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     req.headers.get("x-real-ip")?.trim() ||
     "unknown"
 
-  const rateLimit = rateLimitByIp(ipAddress)
+  const rateLimit = await rateLimitByIp(ipAddress)
 
   if (!rateLimit.success) {
     return NextResponse.json(
@@ -77,7 +77,7 @@ async function persistClaimLog({
       verdict: factCheckResult.classification,
       confidenceScore: factCheckResult.confidence,
       languageDetected: factCheckResult.languageDetected,
-      sourceUrl: factCheckResult.sources[0]?.url ?? null,
+      sourceUrl: null,
     })
   } catch (error) {
     console.error("Failed to log verified claim from /api/verify:", error)
