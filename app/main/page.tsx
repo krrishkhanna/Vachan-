@@ -37,36 +37,7 @@ import { motion } from "framer-motion"
 import { ReaderModeToggle } from "@/components/reader-mode-toggle"
 import { NotificationPanel } from "@/components/notification-panel"
 import { CommunitiesSection } from "@/components/communities-section"
-
-// Cursor tracking component for main page
-const MainPageCursorEffect = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const { resolvedTheme } = useTheme()
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
-
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      <motion.div
-        className={`absolute rounded-full blur-3xl ${resolvedTheme === "dark" ? "bg-[#0077b6]/10" : "bg-[#0077b6]/20"}`}
-        style={{
-          width: 150,
-          height: 150,
-          left: mousePosition.x - 75,
-          top: mousePosition.y - 75,
-          transition: "left 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), top 0.2s cubic-bezier(0.25, 0.1, 0.25, 1)",
-        }}
-      />
-    </div>
-  )
-}
+import { QuickVerifyPanel } from "@/components/quick-verify-panel"
 
 const feedTabs = [
   { value: "trending", label: "Signal" },
@@ -112,48 +83,54 @@ export default function MainPage() {
   }, [])
 
   // Update the fetchWorldNews function to use MediaStack API
-  const fetchWorldNews = useCallback(async () => {
+  const fetchWorldNews = useCallback(async (showToast = false) => {
     setIsLoading(true)
     try {
       const newsData = await fetchNewsFromAPI()
       setApiArticles(newsData)
 
-      // Show success toast
-      toast({
-        title: "News Updated",
-        description: "Latest world news has been loaded successfully.",
-      })
+      if (showToast) {
+        toast({
+          title: "Feed updated",
+          description: "Latest world coverage has been loaded successfully.",
+        })
+      }
     } catch (error) {
       console.error("Error fetching world news:", error)
-      toast({
-        title: "Error Loading News",
-        description: "Failed to load world news. Using fallback data.",
-        variant: "destructive",
-      })
+      if (showToast) {
+        toast({
+          title: "Error loading news",
+          description: "Failed to load world coverage. Using fallback data.",
+          variant: "destructive",
+        })
+      }
     } finally {
       setIsLoading(false)
     }
   }, [toast])
 
   // Update the fetchIndianNews function to use MediaStack API
-  const fetchIndianNews = useCallback(async () => {
+  const fetchIndianNews = useCallback(async (showToast = false) => {
     setIsLoading(true)
     try {
       const newsData = await fetchIndianNewsFromAPI()
       setIndianArticles(newsData)
 
-      // Show success toast
-      toast({
-        title: "Indian News Updated",
-        description: "Latest Indian news has been loaded successfully.",
-      })
+      if (showToast) {
+        toast({
+          title: "India feed updated",
+          description: "Latest Indian coverage has been loaded successfully.",
+        })
+      }
     } catch (error) {
       console.error("Error fetching Indian news:", error)
-      toast({
-        title: "Error Loading News",
-        description: "Failed to load Indian news. Using fallback data.",
-        variant: "destructive",
-      })
+      if (showToast) {
+        toast({
+          title: "Error loading news",
+          description: "Failed to load Indian coverage. Using fallback data.",
+          variant: "destructive",
+        })
+      }
     } finally {
       setIsLoading(false)
     }
@@ -168,8 +145,8 @@ export default function MainPage() {
     })
 
     // Fetch fresh news from both APIs
-    fetchWorldNews()
-    fetchIndianNews()
+    fetchWorldNews(true)
+    fetchIndianNews(true)
   }
 
   // Add a useEffect to refresh news every 30 minutes
@@ -210,8 +187,6 @@ export default function MainPage() {
           : "bg-gradient-to-br from-[#e6f4ff] via-background to-[#e6f4ff]"
       }`}
     >
-      <MainPageCursorEffect />
-
       <header className="glass border-b border-border sticky top-0 z-10 backdrop-blur-md bg-background/70">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between relative overflow-hidden">
           <Link href="/landing">
@@ -400,6 +375,52 @@ export default function MainPage() {
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Ops view</p>
               <p className="mt-2 text-2xl font-bold tracking-tight">Live</p>
               <p className="mt-1 text-sm text-muted-foreground">Dashboard refreshes every 60 seconds</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-8 grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <QuickVerifyPanel />
+
+          <div className="rounded-[30px] border border-[#0077b6]/14 bg-white/78 p-6 shadow-[0_18px_58px_rgba(0,119,182,0.08)] backdrop-blur dark:bg-slate-950/50">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#0077b6]">Why it matters</p>
+                <h2 className="mt-2 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">
+                  Useful before it feels beautiful.
+                </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
+                  The public shouldn’t have to guess what to do here. This surface now gives them three concrete paths:
+                  verify a claim instantly, inspect the live dashboard, or scan the day’s current misinformation feed.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-[#0077b6]/10 p-3 text-[#0077b6]">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-[22px] border border-[#0077b6]/10 bg-[#0077b6]/5 p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Public outcome</p>
+                <p className="mt-2 text-lg font-semibold">Fast verdicts</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Users can paste a claim and get a verdict, confidence score, and sources without signing in.
+                </p>
+              </div>
+              <div className="rounded-[22px] border border-[#0077b6]/10 bg-[#0077b6]/5 p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Public proof</p>
+                <p className="mt-2 text-lg font-semibold">Visible evidence</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Dashboard charts and recent claims make the system legible instead of feeling like a black box.
+                </p>
+              </div>
+              <div className="rounded-[22px] border border-[#0077b6]/10 bg-[#0077b6]/5 p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Public trust</p>
+                <p className="mt-2 text-lg font-semibold">Source-backed review</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  The feed and claim results now point people toward links and context instead of vague AI-only summaries.
+                </p>
+              </div>
             </div>
           </div>
         </section>
