@@ -78,11 +78,11 @@ pip install -r requirements.txt # or pip3 install -r requirements.txt
 ##### Configure API Keys for Backend Services:
 
 *   **Google Fact Check Service (`fact_check_service/app.py`):**
-    *   The service is currently set up to read the API key directly from the line `GOOGLE_API_KEY = os.environ.get('AIzaSyCkCV893HYGsWq7x24QBeimwrs8fSnqRK4')`.
+    *   The service is currently set up to read the API key directly from the line `GOOGLE_API_KEY = os.environ.get('api_key').
     *   **Recommended:** Modify this to use an environment variable. Set `GOOGLE_API_KEY` in your environment before running the service.
         ```python
         # In fact_check_service/app.py, change:
-        # GOOGLE_API_KEY = os.environ.get('AIzaSyCkCV893HYGsWq7x24QBeimwrs8fSnqRK4')
+        # GOOGLE_API_KEY = os.environ.get('api_key')
         # to:
         GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
         ```
