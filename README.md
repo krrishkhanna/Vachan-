@@ -20,7 +20,7 @@ Vachan is an AI-powered fact-checking web application designed to combat misinfo
 ## Showcase
 
 *   [Watch the Demo on YouTube](https://www.youtube.com/watch?v=7WnDl5LnKYM)
-*   [Website link](https://vachan1.vercel.app/landing)
+*   [Website link](https://vachan-1.netlify.app/landing)
 *   [Access the PPT, Demo Video on Google Drive](https://drive.google.com/drive/folders/1sRW1goXgG2rOL0CsMoWrP8IdkQLm7iZy?usp=sharing)
 
 ---
